@@ -28,9 +28,6 @@ func main() {
 	app.Database.DB.GetDB().AutoMigrate(
 		&entity.Address{},
 		&entity.City{},
-		&entity.NotificationSetting{},
-		&entity.NotificationType{},
-		&entity.Notification{},
 		&entity.Permission{},
 		&entity.Province{},
 		&entity.Role{},
@@ -43,7 +40,6 @@ func main() {
 	)
 
 	app.Seeds.AddressSeeder.SeedProvincesAndCities()
-	app.Seeds.NotificationTypeSeeder.SeedNotificationTypes()
 	app.Seeds.RoleSeeder.SeedRoles()
 
 	if err := app.Consumers.Register.Start(); err != nil {
@@ -53,9 +49,6 @@ func main() {
 		panic(err)
 	}
 	if err := app.Consumers.Email.Start(); err != nil {
-		panic(err)
-	}
-	if err := app.Consumers.Notification.Start(); err != nil {
 		panic(err)
 	}
 

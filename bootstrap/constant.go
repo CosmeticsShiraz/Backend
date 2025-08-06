@@ -53,9 +53,6 @@ type ErrorField struct {
 	City                string
 	Page                string
 	Room                string
-	NotificationType    string
-	Notification        string
-	NotificationSetting string
 	Role                string
 	Permission          string
 	PaymentTerm         string
@@ -134,13 +131,6 @@ type RabbitMQConstants struct {
 	Events   Events
 }
 
-type Exchanges struct {
-	Notifications string
-	DLX           string
-	TypeTopic     string
-	TypeFanout    string
-}
-
 type Queues struct {
 	DLQ string
 }
@@ -149,13 +139,6 @@ type Headers struct {
 	RetryCount string
 	LastError  string
 	DeadLetter string
-}
-
-type Events struct {
-	NotificationsEmail string
-	NotificationsPush  string
-	UserRegistered     string
-	SendNotification   string
 }
 
 func NewConstants() *Constants {
@@ -188,11 +171,8 @@ func NewConstants() *Constants {
 			City:                "city",
 			Page:                "page",
 			Room:                "room",
-			NotificationType:    "notificationType",
-			Notification:        "notification",
 			Role:                "role",
 			Permission:          "permission",
-			NotificationSetting: "notificationSetting",
 			PaymentTerm:         "paymentTerm",
 			News:                "news",
 			Media:               "media",
@@ -257,25 +237,10 @@ func NewConstants() *Constants {
 			User:                "users",
 		},
 		RabbitMQ: RabbitMQConstants{
-			Exchange: Exchanges{
-				Notifications: "notifications",
-				DLX:           "dlx_notifications",
-				TypeTopic:     "topic",
-				TypeFanout:    "fanout",
-			},
-			Queue: Queues{
-				DLQ: "dlq_notifications",
-			},
 			Headers: Headers{
 				RetryCount: "x-retry-count",
 				LastError:  "x-last-error",
 				DeadLetter: "x-dead-letter-exchange",
-			},
-			Events: Events{
-				NotificationsEmail: "Notifications.Email",
-				NotificationsPush:  "Notifications.Push",
-				UserRegistered:     "Users.Register",
-				SendNotification:   "Notifications.Send",
 			},
 		},
 	}

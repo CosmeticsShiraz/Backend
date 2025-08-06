@@ -30,7 +30,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/notification"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/user"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/middleware"
@@ -49,20 +48,17 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewUserRepository,
 	infraPostgres.NewAddressRepository,
 	infraRedis.NewUserCacheRepository,
-	infraPostgres.NewNotificationRepository,
 	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
 	wire.Bind(new(domainPostgres.AddressRepository), new(*infraPostgres.AddressRepository)),
 	wire.Bind(new(domainRedis.UserCacheRepository), new(*infraRedis.UserCacheRepository)),
-	wire.Bind(new(domainPostgres.NotificationRepository), new(*infraPostgres.NotificationRepository)),
 	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
 	wire.Bind(new(domainPostgres.NewsRepository), new(*infraPostgres.NewsRepository)),
 )
 
 var ServiceProviderSet = wire.NewSet(
 	wire.Struct(new(service.UserServiceDeps), "*"),
-	wire.Struct(new(service.NotificationServiceDeps), "*"),
 	service.NewUserService,
 	service.NewOTPService,
 	sms.NewSMSService,
@@ -70,7 +66,6 @@ var ServiceProviderSet = wire.NewSet(
 	service.NewJWTService,
 	service.,
 	service.NewAddressService,
-	service.NewNotificationService,
 	service.NewPaymentService,
 	service.NewNewsService,
 	wire.Bind(new(usecase.UserService), new(*service.UserService)),
@@ -79,7 +74,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(communication.EmailService), new(*email.EmailService)),
 	wire.Bind(new(usecase.JWTService), new(*service.JWTService)),
 	wire.Bind(new(usecase.AddressService), new(*service.AddressService)),
-	wire.Bind(new(usecase.NotificationService), new(*service.NotificationService)),
 	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
 	wire.Bind(new(usecase.NewsService), new(*service.NewsService)),
 )
@@ -100,7 +94,6 @@ var AdapterProviderSet = wire.NewSet(
 var GeneralControllerProviderSet = wire.NewSet(
 	user.NewGeneralUserController,
 	address.NewGeneralAddressController,
-	notification.NewGeneralNotificationController,
 	news.NewGeneralNewsController,
 	payment.NewGeneralPaymentController,
 	wire.Struct(new(GeneralControllers), "*"),
@@ -109,7 +102,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 var CustomerControllerProviderSet = wire.NewSet(
 	user.NewCustomerUserController,
 	address.NewCustomerAddressController,
-	notification.NewCustomerNotificationController,
 	wire.Struct(new(CustomerControllers), "*"),
 )
 
@@ -137,7 +129,6 @@ var MiddlewareProviderSet = wire.NewSet(
 
 var SeederProviderSet = wire.NewSet(
 	seed.NewAddressSeeder,
-	seed.NewNotificationTypeSeeder,
 	seed.NewRoleSeeder,
 	wire.Struct(new(Seeds), "*"),
 )
@@ -146,7 +137,6 @@ var ConsumerProviderSet = wire.NewSet(
 	consumer.NewRegisterConsumer,
 	consumer.NewPushConsumer,
 	consumer.NewEmailConsumer,
-	consumer.NewSendNotificationConsumer,
 	wire.Struct(new(Consumers), "*"),
 )
 
@@ -262,7 +252,6 @@ type Database struct {
 type GeneralControllers struct {
 	UserController         *user.GeneralUserController
 	AddressController      *address.GeneralAddressController
-	NotificationController *notification.GeneralNotificationController
 	NewsController         *news.GeneralNewsController
 	PaymentController      *payment.GeneralPaymentController
 }
@@ -270,7 +259,6 @@ type GeneralControllers struct {
 type CustomerControllers struct {
 	UserController         *user.CustomerUserController
 	AddressController      *address.CustomerAddressController
-	NotificationController *notification.CustomerNotificationController
 }
 
 type AdminControllers struct {
@@ -297,7 +285,6 @@ type Middlewares struct {
 
 type Seeds struct {
 	AddressSeeder          *seed.AddressSeeder
-	NotificationTypeSeeder *seed.NotificationTypeSeeder
 	RoleSeeder             *seed.RoleSeeder
 }
 
@@ -305,7 +292,6 @@ type Consumers struct {
 	Register     *consumer.RegisterConsumer
 	Push         *consumer.PushConsumer
 	Email        *consumer.EmailConsumer
-	Notification *consumer.SendNotificationConsumer
 }
 
 type Application struct {
