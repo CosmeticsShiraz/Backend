@@ -48,7 +48,6 @@ type ErrorField struct {
 	Email               string
 	Password            string
 	OTP                 string
-	Corporation         string
 	NationalID          string
 	RegistrationNumber  string
 	IBAN                string
