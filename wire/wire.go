@@ -21,8 +21,6 @@ import (
 	infraLocalization "github.com/CosmeticsShiraz/Backend/internal/infrastructure/localization"
 	infraLogger "github.com/CosmeticsShiraz/Backend/internal/infrastructure/logger"
 	infraMetrics "github.com/CosmeticsShiraz/Backend/internal/infrastructure/metrics"
-	infraRabbitMQ "github.com/CosmeticsShiraz/Backend/internal/infrastructure/rabbitmq"
-	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/rabbitmq/consumer"
 	infraPostgres "github.com/CosmeticsShiraz/Backend/internal/infrastructure/repository/postgres"
 	infraRedis "github.com/CosmeticsShiraz/Backend/internal/infrastructure/repository/redis"
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/seed"
@@ -83,11 +81,9 @@ var AdapterProviderSet = wire.NewSet(
 	infraJWT.NewJWTKeyManager,
 	infraMetrics.NewPrometheusMetrics,
 	infraStorage.NewS3Storage,
-	infraRabbitMQ.NewRabbitMQ,
 	wire.Bind(new(domainLogger.Logger), new(*infraLogger.Logger)),
 	wire.Bind(new(domainMetrics.MetricsClient), new(*infraMetrics.PrometheusMetrics)),
 	wire.Bind(new(s3.S3Storage), new(*infraStorage.S3Storage)),
-	wire.Bind(new(message.Broker), new(*infraRabbitMQ.RabbitMQ)),
 )
 
 var GeneralControllerProviderSet = wire.NewSet(
@@ -198,14 +194,6 @@ func ProvideSuperAdminCredential(container *bootstrap.Config) *bootstrap.AdminCr
 	return &container.Env.SuperAdmin
 }
 
-func ProvideRabbitMQConfig(container *bootstrap.Config) *bootstrap.RabbitMQ {
-	return &container.Env.RabbitMQ
-}
-
-func ProvideRabbitMQConstants(container *bootstrap.Config) *bootstrap.RabbitMQConstants {
-	return &container.Constants.RabbitMQ
-}
-
 var ProviderSet = wire.NewSet(
 	DatabaseProviderSet,
 	RepositoryProviderSet,
@@ -233,8 +221,7 @@ var ProviderSet = wire.NewSet(
 	ProvideStorageConfig,
 	ProvideEmailSenderAccount,
 	ProvideSuperAdminCredential,
-	ProvideRabbitMQConfig,
-	ProvideRabbitMQConstants,
+	,
 )
 
 type Database struct {

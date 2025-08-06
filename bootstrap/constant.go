@@ -14,7 +14,6 @@ type Constants struct {
 	JWTKeysPath         JWTKeysPath
 	Metrics             Metrics
 	AddressOwners       AddressOwners
-	RabbitMQ            RabbitMQConstants
 }
 
 type Context struct {
@@ -122,13 +121,6 @@ type AddressOwners struct {
 	User                string
 }
 
-type RabbitMQConstants struct {
-	Exchange Exchanges
-	Queue    Queues
-	Headers  Headers
-	Events   Events
-}
-
 type Queues struct {
 	DLQ string
 }
@@ -231,13 +223,6 @@ func NewConstants() *Constants {
 		},
 		AddressOwners: AddressOwners{
 			User:                "users",
-		},
-		RabbitMQ: RabbitMQConstants{
-			Headers: Headers{
-				RetryCount: "x-retry-count",
-				LastError:  "x-last-error",
-				DeadLetter: "x-dead-letter-exchange",
-			},
 		},
 	}
 }

@@ -2,7 +2,6 @@ package routes
 
 import (
 	httpv1 "github.com/CosmeticsShiraz/Backend/internal/presentation/routes/http/v1"
-	wsv1 "github.com/CosmeticsShiraz/Backend/internal/presentation/routes/ws/v1"
 	"github.com/CosmeticsShiraz/Backend/wire"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
