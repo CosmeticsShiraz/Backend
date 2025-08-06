@@ -62,10 +62,7 @@ type S3 struct {
 }
 
 type BucketName struct {
-	VATTaxpayerCertificate string
-	OfficialNewspaperAD    string
 	ProfilePic             string
-	LogoPic                string
 	NewsMedia              string
 }
 
@@ -132,10 +129,7 @@ func NewEnvironments() *Env {
 		},
 		Storage: S3{
 			Buckets: BucketName{
-				VATTaxpayerCertificate: os.Getenv("TAXPAYER_CERTIFICATE_BUCKET_NAME"),
-				OfficialNewspaperAD:    os.Getenv("OFFICIAL_NEWSPAPER_AD_BUCKET_NAME"),
 				ProfilePic:             os.Getenv("PROFILE_PIC_BUCKET_NAME"),
-				LogoPic:                os.Getenv("LOGO_PIC_BUCKET_NAME"),
 				NewsMedia:              os.Getenv("NEWS_MEDIA_BUCKET_NAME"),
 			},
 			Region:    os.Getenv("BUCKET_REGION"),

@@ -3,23 +3,14 @@ package enum
 type BucketType uint
 
 const (
-	VATTaxpayerCertificate BucketType = iota + 1
-	OfficialNewspaperAD
-	ProfilePic
-	LogoPic
+	ProfilePic = iota + 1
 	NewsMedia
 )
 
 func (bt BucketType) String() string {
 	switch bt {
-	case VATTaxpayerCertificate:
-		return "vatTaxpayerCertificate"
-	case OfficialNewspaperAD:
-		return "officialNewspaperAD"
 	case ProfilePic:
 		return "profilePic"
-	case LogoPic:
-		return "logoPic"
 	case NewsMedia:
 		return "newsMedia"
 	}
@@ -28,10 +19,7 @@ func (bt BucketType) String() string {
 
 func GetAllBucketTypes() []BucketType {
 	return []BucketType{
-		VATTaxpayerCertificate,
-		OfficialNewspaperAD,
 		ProfilePic,
-		LogoPic,
 		NewsMedia,
 	}
 }

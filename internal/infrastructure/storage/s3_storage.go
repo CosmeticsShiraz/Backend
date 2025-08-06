@@ -29,10 +29,7 @@ func NewS3Storage(
 	storage *bootstrap.S3,
 ) *S3Storage {
 	buckets := make(map[enum.BucketType]string)
-	buckets[enum.VATTaxpayerCertificate] = storage.Buckets.VATTaxpayerCertificate
-	buckets[enum.OfficialNewspaperAD] = storage.Buckets.OfficialNewspaperAD
 	buckets[enum.ProfilePic] = storage.Buckets.ProfilePic
-	buckets[enum.LogoPic] = storage.Buckets.LogoPic
 	buckets[enum.NewsMedia] = storage.Buckets.NewsMedia
 	return &S3Storage{
 		constants: constants,
