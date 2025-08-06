@@ -31,6 +31,7 @@ func main() {
 		&entity.Media{},
 		&entity.News{},
 		&entity.Like{},
+		
 		&entity.Product{},
 		&entity.Category{},
 		&entity.Brand{},

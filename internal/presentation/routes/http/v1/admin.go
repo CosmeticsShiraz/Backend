@@ -63,4 +63,28 @@ func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		}
 
 	}
+
+	products := routerGroup.Group("/products")
+	{
+		products.GET("", app.Controllers.Admin.UserController.GetUsers)
+		products.POST("", app.Controllers.Admin.UserController.GetUsers)
+		products.PUT("/:productID", app.Controllers.Admin.UserController.GetUsers)
+		products.DELETE("/:productID", app.Controllers.Admin.UserController.GetUsers)
+	}
+
+	categories := routerGroup.Group("/categories")
+	{
+		products.GET("", app.Controllers.Admin.UserController.GetUsers)
+		products.POST("", app.Controllers.Admin.UserController.GetUsers)
+		products.PUT("/:categoryID", app.Controllers.Admin.UserController.GetUsers)
+		products.DELETE("/:categoryID", app.Controllers.Admin.UserController.GetUsers)
+	}
+
+	brands := routerGroup.Group("/brands")
+	{
+		products.GET("", app.Controllers.Admin.UserController.GetUsers)
+		products.POST("", app.Controllers.Admin.UserController.GetUsers)
+		products.PUT("/:brandID", app.Controllers.Admin.UserController.GetUsers)
+		products.DELETE("/:brandID", app.Controllers.Admin.UserController.GetUsers)
+	}
 }

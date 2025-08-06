@@ -56,6 +56,8 @@ type ErrorField struct {
 	Media               string
 	Post                string
 	Like                string
+
+	Picture             string
 }
 
 type ErrorTag struct {
@@ -164,6 +166,8 @@ func NewConstants() *Constants {
 			Media:               "media",
 			Post:                "post",
 			Like:                "like",
+
+			Picture:             "picture",
 		},
 		Tag: ErrorTag{
 			AlreadyRegistered:      "alreadyRegistered",
