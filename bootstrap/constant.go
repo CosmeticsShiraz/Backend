@@ -52,7 +52,6 @@ type ErrorField struct {
 	NationalID          string
 	RegistrationNumber  string
 	IBAN                string
-	InstallationRequest string
 	Address             string
 	Name                string
 	Province            string
@@ -144,7 +143,6 @@ type Options struct {
 type AddressOwners struct {
 	User                string
 	Corporation         string
-	InstallationRequest string
 	Panel               string
 	MaintenanceRequest  string
 }
@@ -225,7 +223,6 @@ func NewConstants() *Constants {
 			NationalID:          "nationalID",
 			RegistrationNumber:  "registrationNumber",
 			IBAN:                "iban",
-			InstallationRequest: "installationRequest",
 			Address:             "address",
 			Name:                "name",
 			Province:            "province",
@@ -312,7 +309,6 @@ func NewConstants() *Constants {
 		AddressOwners: AddressOwners{
 			User:                "users",
 			Corporation:         "corporations",
-			InstallationRequest: "installation_requests",
 			Panel:               "panels",
 		},
 		TicketOwners: TicketOwners{
