@@ -8,10 +8,6 @@ import (
 )
 
 // convert to enum
-const (
-	MessageTypeChat         = "chat"
-	MessageTypeNotification = "notification"
-)
 
 type Message struct {
 	MessageID uint                       `json:"id"`

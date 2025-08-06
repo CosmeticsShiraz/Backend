@@ -75,38 +75,6 @@ func (hub *Hub) handleUnregister(client *Client) {
 	client.CloseConnection()
 }
 
-func (hub *Hub) handleBroadcast(message *Message) {
-	hub.mu.Lock()
-	defer hub.mu.Unlock()
-
-	switch message.Type {
-	case MessageTypeChat:
-		messageBytes, err := json.Marshal(message)
-		if err != nil {
-			panic(err)
-		}
-		if room, ok := hub.rooms[message.RoomID]; ok {
-			for client := range room {
-				select {
-				case client.send <- messageBytes:
-				default:
-					hub.unregister <- client
-				}
-			}
-		}
-	case MessageTypeNotification:
-		if clients, ok := hub.clients[message.SenderID]; ok {
-			for client := range clients {
-				select {
-				case client.send <- message.Content:
-				default:
-					hub.unregister <- client
-				}
-			}
-		}
-	}
-}
-
 func (hub *Hub) SendToUser(userID uint, messageType string, content []byte) error {
 	hub.mu.RLock()
 	defer hub.mu.RUnlock()

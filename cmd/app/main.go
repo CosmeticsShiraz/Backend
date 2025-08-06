@@ -28,8 +28,6 @@ func main() {
 	app.Database.DB.GetDB().AutoMigrate(
 		&entity.Address{},
 		&entity.City{},
-		&entity.ChatMessage{},
-		&entity.ChatRoom{},
 		&entity.NotificationSetting{},
 		&entity.NotificationType{},
 		&entity.Notification{},

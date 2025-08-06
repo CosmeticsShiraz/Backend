@@ -93,8 +93,6 @@ var Persian = map[string]interface{}{
 		"completeRegister":          "اطلاعات تکمیلی ثبت نام با موفقیت انجام شد.",
 		"emailVerification":         "ایمیل شما با موفقیت تایید شد.",
 		"updateProfile":             "پروفایل شما با موفقیت به روزرسانی شد.",
-		"blockChatRoom":             "اتاق گفتگو با موفقیت مسدود شد.",
-		"unblockChatRoom":           "اتاق گفتگو با موفقیت رفع مسدود شد.",
 		"createRole":                "نقش جدید با موفقیت ساخته شد.",
 		"deleteRole":                "نقش مورد نظر با موفقیت حذف شد..",
 		"updateRole":                "نقش مورد نظر با موفقیت به روزرسانی شد.",

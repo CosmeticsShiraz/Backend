@@ -29,7 +29,6 @@ import (
 	infraStorage "github.com/CosmeticsShiraz/Backend/internal/infrastructure/storage"
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/chat"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/notification"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
@@ -50,14 +49,12 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewUserRepository,
 	infraPostgres.NewAddressRepository,
 	infraRedis.NewUserCacheRepository,
-	infraPostgres.NewChatRepository,
 	infraPostgres.NewNotificationRepository,
 	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
 	wire.Bind(new(domainPostgres.AddressRepository), new(*infraPostgres.AddressRepository)),
 	wire.Bind(new(domainRedis.UserCacheRepository), new(*infraRedis.UserCacheRepository)),
-	wire.Bind(new(domainPostgres.ChatRepository), new(*infraPostgres.ChatRepository)),
 	wire.Bind(new(domainPostgres.NotificationRepository), new(*infraPostgres.NotificationRepository)),
 	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
 	wire.Bind(new(domainPostgres.NewsRepository), new(*infraPostgres.NewsRepository)),
@@ -73,7 +70,6 @@ var ServiceProviderSet = wire.NewSet(
 	service.NewJWTService,
 	service.,
 	service.NewAddressService,
-	service.NewChatService,
 	service.NewNotificationService,
 	service.NewPaymentService,
 	service.NewNewsService,
@@ -83,7 +79,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(communication.EmailService), new(*email.EmailService)),
 	wire.Bind(new(usecase.JWTService), new(*service.JWTService)),
 	wire.Bind(new(usecase.AddressService), new(*service.AddressService)),
-	wire.Bind(new(usecase.ChatService), new(*service.ChatService)),
 	wire.Bind(new(usecase.NotificationService), new(*service.NotificationService)),
 	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
 	wire.Bind(new(usecase.NewsService), new(*service.NewsService)),
@@ -114,7 +109,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 var CustomerControllerProviderSet = wire.NewSet(
 	user.NewCustomerUserController,
 	address.NewCustomerAddressController,
-	chat.NewCustomerChatController,
 	notification.NewCustomerNotificationController,
 	wire.Struct(new(CustomerControllers), "*"),
 )
@@ -276,7 +270,6 @@ type GeneralControllers struct {
 type CustomerControllers struct {
 	UserController         *user.CustomerUserController
 	AddressController      *address.CustomerAddressController
-	ChatController         *chat.CustomerChatController
 	NotificationController *notification.CustomerNotificationController
 }
 

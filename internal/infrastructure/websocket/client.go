@@ -21,14 +21,12 @@ type Client struct {
 	mu                  sync.Mutex
 	done                chan struct{}
 	closeOnce           sync.Once
-	chatService         usecase.ChatService
 	notificationService usecase.NotificationService
 }
 
 func NewClient(
 	hub *Hub, conn any, roomID, userID uint,
 	websocketSetting *bootstrap.WebsocketSetting,
-	chatService usecase.ChatService,
 	notificationService usecase.NotificationService,
 ) *Client {
 	wsConn, _ := conn.(*websocket.Conn)
@@ -40,7 +38,6 @@ func NewClient(
 		roomID:              roomID,
 		userID:              userID,
 		done:                make(chan struct{}),
-		chatService:         chatService,
 		notificationService: notificationService,
 	}
 }
@@ -68,11 +65,6 @@ func (client *Client) ReadPump() error {
 		message.Client = client
 		message.Timestamp = time.Now()
 		message.RoomID = client.roomID
-
-		switch message.Type {
-		case MessageTypeChat:
-			client.processAndSaveChatMessage(&message)
-		}
 
 		client.Hub.broadcast <- &message
 	}
@@ -134,18 +126,4 @@ func (client *Client) CloseConnection() {
 			websocket.FormatCloseMessage(websocket.CloseNormalClosure, "closing connection"))
 		client.conn.Close()
 	})
-}
-
-func (client *Client) processAndSaveChatMessage(message *Message) {
-	var content string
-	if err := json.Unmarshal(message.Content, &content); err != nil {
-		return
-	}
-	savedMessage, err := client.chatService.SaveMessage(client.roomID, client.userID, content)
-	if err != nil {
-		return
-	}
-
-	message.MessageID = savedMessage.ID
-	message.Sender = savedMessage.Sender
 }
