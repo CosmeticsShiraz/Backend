@@ -53,7 +53,6 @@ type ErrorField struct {
 	RegistrationNumber  string
 	IBAN                string
 	InstallationRequest string
-	Bid                 string
 	Address             string
 	Name                string
 	Province            string
@@ -227,7 +226,6 @@ func NewConstants() *Constants {
 			RegistrationNumber:  "registrationNumber",
 			IBAN:                "iban",
 			InstallationRequest: "installationRequest",
-			Bid:                 "bid",
 			Address:             "address",
 			Name:                "name",
 			Province:            "province",

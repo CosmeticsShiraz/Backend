@@ -47,7 +47,6 @@ func main() {
 		&entity.ContactType{},
 		&entity.ContactInformation{},
 		&entity.InstallationRequest{},
-		&entity.Bid{},
 		&entity.PaymentTerm{},
 		&entity.InstallmentPlan{},
 		&entity.Panel{},

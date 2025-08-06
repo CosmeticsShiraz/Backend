@@ -74,34 +74,6 @@ func (installationController *CorporationInstallationController) GetInstallation
 	controller.Response(ctx, 200, "", installationRequest)
 }
 
-func (installationController *CorporationInstallationController) CompleteInstallation(ctx *gin.Context) {
-	type completeBidParams struct {
-		CorporationID   uint `uri:"corporationID" validate:"required"`
-		PanelID         uint `uri:"panelID" validate:"required"`
-		Tilt            uint `json:"tilt" validate:"required"`
-		Azimuth         uint `json:"area" validate:"required"`
-		NumberOfModules uint `json:"numberOfModules" validate:"required"`
-	}
-	params := controller.Validated[completeBidParams](ctx)
-	userID, _ := ctx.Get(installationController.constants.Context.ID)
-
-	panelInfo := installationdto.CompleteBidInstallationRequest{
-		CorporationID:   params.CorporationID,
-		OperatorID:      userID.(uint),
-		PanelID:         params.PanelID,
-		Tilt:            params.Tilt,
-		Azimuth:         params.Azimuth,
-		NumberOfModules: params.NumberOfModules,
-	}
-	if err := installationController.installationService.CompleteInstallationRequest(panelInfo); err != nil {
-		panic(err)
-	}
-
-	trans := controller.GetTranslator(ctx, installationController.constants.Context.Translator)
-	message, _ := trans.Translate("successMessage.completeInstallation")
-	controller.Response(ctx, 200, message, nil)
-}
-
 func (installationController *CorporationInstallationController) AddPanel(ctx *gin.Context) {
 	type addPanelParams struct {
 		CorporationID        uint   `uri:"corporationID" validate:"required"`

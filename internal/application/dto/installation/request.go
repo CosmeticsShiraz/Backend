@@ -75,14 +75,6 @@ type ChangeRequestStatusRequest struct {
 	RequestID uint
 }
 
-type CompleteBidInstallationRequest struct {
-	CorporationID   uint
-	OperatorID      uint
-	PanelID         uint
-	Tilt            uint
-	Azimuth         uint
-	NumberOfModules uint
-}
 
 type AddPanelRequest struct {
 	CorporationID        uint

@@ -9,7 +9,6 @@ type InstallationService interface {
 	AddPanel(panelInfo installationdto.AddPanelRequest) error
 	ChangeInstallationRequestStatus(request installationdto.ChangeRequestStatusRequest) error
 	ClearPanelGuaranteeViolation(violationInfo installationdto.GetCorporationGuaranteeViolationRequest) error
-	CompleteInstallationRequest(request installationdto.CompleteBidInstallationRequest) error
 	CreateInstallationRequest(request installationdto.NewInstallationRequest) error
 	GetAnonymousInstallationRequest(request installationdto.CorporationPanelRequest) (installationdto.AnonymousRequestsResponse, error)
 	GetAnonymousInstallationRequests(request installationdto.CorporationPanelListRequest) ([]installationdto.AnonymousRequestsResponse, error)

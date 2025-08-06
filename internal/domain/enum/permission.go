@@ -53,13 +53,6 @@ const (
 	PanelViewAll
 	PanelCreate
 
-	// Bid Management
-	BidViewInstallationRequests
-	BidViewAll
-	BidCreate
-	BidEdit
-	BidCancel
-
 	// Maintenance Management
 	MaintenanceViewAll
 	MaintenanceAcceptRequest
@@ -92,7 +85,6 @@ const (
 	CategoryBlog
 	CategoryNews
 	CategoryPanel
-	CategoryBid
 	CategoryMaintenance
 	CategoryGuarantee
 	CategoryProfile
@@ -145,13 +137,6 @@ var permissionNames = map[PermissionType]string{
 	// Panel Management
 	PanelViewAll: "panel.viewAll",
 	PanelCreate:  "panel.create",
-
-	// Bid Management
-	BidViewInstallationRequests: "bid.viewInstallationRequests",
-	BidViewAll:                  "bid.viewAll",
-	BidCreate:                   "bid.create",
-	BidEdit:                     "bid.edit",
-	BidCancel:                   "bid.cancel",
 
 	// Maintenance Management
 	MaintenanceViewAll:       "maintenance.viewAll",
@@ -221,14 +206,7 @@ var permissionDescriptions = map[PermissionType]string{
 
 	// Panel Management
 	PanelViewAll: "مشاهده لیست پنل‌ها",
-	PanelCreate:  "ایجاد پنل جدید",
-
-	// Bid Management
-	BidViewInstallationRequests: "مشاهده لیست درخواست‌های نصب",
-	BidViewAll:                  "مشاهده لیست پیشنهادات",
-	BidCreate:                   "ایجاد پیشنهاد جدید",
-	BidEdit:                     "ویرایش پیشنهاد",
-	BidCancel:                   "لغو پیشنهاد",
+	PanelCreate:  "ایجاد پنل جدید",          "لغو پیشنهاد",
 
 	// Maintenance Management
 	MaintenanceViewAll:       "مشاهده لیست درخواست‌های تعمیر",
@@ -300,13 +278,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	PanelViewAll: CategoryPanel,
 	PanelCreate:  CategoryPanel,
 
-	// Bid Management
-	BidViewInstallationRequests: CategoryBid,
-	BidViewAll:                  CategoryBid,
-	BidCreate:                   CategoryBid,
-	BidEdit:                     CategoryBid,
-	BidCancel:                   CategoryBid,
-
 	// Maintenance Management
 	MaintenanceViewAll:       CategoryMaintenance,
 	MaintenanceAcceptRequest: CategoryMaintenance,
@@ -370,8 +341,6 @@ func (category PermissionCategory) String() string {
 		return "مدیریت اخبار"
 	case CategoryPanel:
 		return "مدیریت پنل‌ها"
-	case CategoryBid:
-		return "مدیریت پیشنهادات"
 	case CategoryMaintenance:
 		return "مدیریت تعمیرات"
 	case CategoryGuarantee:
@@ -411,9 +380,6 @@ func GetAllPermissionTypes() []PermissionType {
 		// Panel Management
 		PanelViewAll, PanelCreate,
 
-		// Bid Management
-		BidViewInstallationRequests, BidViewAll, BidCreate, BidEdit, BidCancel,
-
 		// Maintenance Management
 		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
 
@@ -432,9 +398,6 @@ func GetCorporationPermissionTypes() []PermissionType {
 	return []PermissionType{
 		// Panel Management
 		PanelViewAll, PanelCreate,
-
-		// Bid Management
-		BidViewInstallationRequests, BidViewAll, BidCreate, BidEdit, BidCancel,
 
 		// Maintenance Management
 		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,

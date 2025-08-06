@@ -18,12 +18,10 @@ var rolePermissions = map[RoleName][]PermissionType{
 	},
 	Customer: {},
 	Technician: {
-		BidViewInstallationRequests, BidViewAll, BidCreate, BidEdit, BidCancel,
 		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
 	},
 	CorporationManager: {
 		PanelViewAll, PanelCreate,
-		BidViewInstallationRequests, BidViewAll, BidCreate, BidEdit, BidCancel,
 		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
 		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
 		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,

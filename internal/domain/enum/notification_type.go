@@ -4,35 +4,30 @@ type NotificationType uint
 
 const (
 	ChatNotificationType NotificationType = iota + 1
-	CorpSendBidNotificationType
 	PanelReportCreated
 	MaintenanceReportCreated
 )
 
 var notificationDescriptions = map[NotificationType]string{
 	ChatNotificationType:        "پیام جدید",
-	CorpSendBidNotificationType: "پیشنهاد جدید از سوی شرکت",
 	PanelReportCreated:          "گزارش جدید از پنل",
 	MaintenanceReportCreated:    "گزارش جدید از تعمیرات",
 }
 
 var supportsEmail = map[NotificationType]bool{
 	ChatNotificationType:        false,
-	CorpSendBidNotificationType: true,
 	PanelReportCreated:          true,
 	MaintenanceReportCreated:    true,
 }
 
 var supportsPush = map[NotificationType]bool{
 	ChatNotificationType:        true,
-	CorpSendBidNotificationType: true,
 	PanelReportCreated:          true,
 	MaintenanceReportCreated:    true,
 }
 
 var notificationEmailTemplate = map[NotificationType]string{
 	ChatNotificationType:        "",
-	CorpSendBidNotificationType: "/get_bid/fa.html",
 	PanelReportCreated:          "/panel_report/fa.html",
 	MaintenanceReportCreated:    "/maintenance_report/fa.html",
 }
@@ -41,8 +36,6 @@ func (notificationType NotificationType) String() string {
 	switch notificationType {
 	case ChatNotificationType:
 		return "پیام جدید"
-	case CorpSendBidNotificationType:
-		return "درخواست نصب پنل"
 	case PanelReportCreated:
 		return "گزارشات جدید از پنل"
 	case MaintenanceReportCreated:
@@ -82,7 +75,6 @@ func (notificationType NotificationType) SupportsPush() bool {
 func GetAllNotificationTypes() []NotificationType {
 	return []NotificationType{
 		ChatNotificationType,
-		CorpSendBidNotificationType,
 		PanelReportCreated,
 		MaintenanceReportCreated,
 	}

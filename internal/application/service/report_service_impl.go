@@ -57,36 +57,6 @@ func (reportService *ReportService) getReport(reportID uint) (*entity.Report, er
 	return report, nil
 }
 
-func (reportService *ReportService) sendReportNotification(acceptedPermissions []enum.PermissionType, reportID uint, notificationType enum.NotificationType) {
-	admins, err := reportService.userService.GetUsersByPermission(acceptedPermissions)
-	if err != nil {
-		log.Printf("error during send notification after bid: %v", err)
-	}
-	for _, admin := range admins {
-		additionalData := reportdto.ReportNotificationData{
-			ReportID: reportID,
-		}
-		data, err := json.Marshal(additionalData)
-		if err != nil {
-			log.Println("Invalid data for message notification")
-		}
-
-		msg := struct {
-			TypeName    enum.NotificationType `json:"typeName"`
-			RecipientID uint                  `json:"recipientID"`
-			Data        []byte                `json:"data"`
-		}{
-			TypeName:    notificationType,
-			RecipientID: admin.ID,
-			Data:        data,
-		}
-
-		if err := reportService.rabbitMQ.PublishMessage(reportService.constants.RabbitMQ.Events.SendNotification, msg); err != nil {
-			log.Printf("error during send notification after bid: %v", err)
-		}
-	}
-}
-
 func (reportService *ReportService) createReport(requestInfo reportdto.CreateReportRequest) (*entity.Report, error) {
 	report := &entity.Report{
 		ObjectID:       requestInfo.ObjectID,

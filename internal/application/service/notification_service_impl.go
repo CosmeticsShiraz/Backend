@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/CosmeticsShiraz/Backend/bootstrap"
-	biddto "github.com/CosmeticsShiraz/Backend/internal/application/dto/bid"
 	notificationdto "github.com/CosmeticsShiraz/Backend/internal/application/dto/notification"
 	reportdto "github.com/CosmeticsShiraz/Backend/internal/application/dto/report"
 	"github.com/CosmeticsShiraz/Backend/internal/application/usecase"
@@ -22,7 +21,6 @@ import (
 type NotificationService struct {
 	constants              *bootstrap.Constants
 	userService            usecase.UserService
-	bidService             usecase.BidService
 	reportService          usecase.ReportService
 	emailService           communication.EmailService
 	notificationRepository postgres.NotificationRepository
@@ -34,7 +32,6 @@ type NotificationService struct {
 type NotificationServiceDeps struct {
 	Constants              *bootstrap.Constants
 	UserService            usecase.UserService
-	BidService             usecase.BidService
 	ReportService          usecase.ReportService
 	EmailService           communication.EmailService
 	NotificationRepository postgres.NotificationRepository
@@ -47,7 +44,6 @@ func NewNotificationService(deps NotificationServiceDeps) *NotificationService {
 	return &NotificationService{
 		constants:              deps.Constants,
 		userService:            deps.UserService,
-		bidService:             deps.BidService,
 		reportService:          deps.ReportService,
 		emailService:           deps.EmailService,
 		notificationRepository: deps.NotificationRepository,
@@ -82,30 +78,6 @@ func (notificationService *NotificationService) CreateAndSendNotification(typeNa
 	}
 
 	return nil
-}
-
-func (notificationService *NotificationService) enrichBidData(rawData []byte) (map[string]interface{}, error) {
-	var bidData biddto.BidNotificationData
-	var result map[string]interface{}
-	if err := json.Unmarshal(rawData, &bidData); err != nil {
-		return nil, err
-	}
-
-	requestInfo := biddto.GetCustomerBidRequest(bidData)
-	bid, err := notificationService.bidService.GetRequestAnonymousBid(requestInfo)
-	if err != nil {
-		return nil, err
-	}
-
-	bidBytes, err := json.Marshal(bid)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(bidBytes, &result); err != nil {
-		return nil, err
-	}
-
-	return result, nil
 }
 
 func (notificationService *NotificationService) enrichMaintenanceReportData(rawData []byte) (map[string]interface{}, error) {
@@ -157,11 +129,6 @@ func (notificationService *NotificationService) dataCatcher(notificationType enu
 	var err error
 
 	switch notificationType {
-	case enum.CorpSendBidNotificationType:
-		data, err = notificationService.enrichBidData(notificationData)
-		if err != nil {
-			return nil, err
-		}
 	case enum.MaintenanceReportCreated:
 		data, err = notificationService.enrichMaintenanceReportData(notificationData)
 		if err != nil {

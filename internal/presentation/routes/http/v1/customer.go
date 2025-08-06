@@ -34,42 +34,6 @@ func SetupCustomerRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		}
 	}
 
-	installations := routerGroup.Group("/installation")
-	{
-		requests := installations.Group("/request")
-		{
-			requests.POST("", app.Controllers.Customer.InstallationController.CreateInstallationRequest)
-			requests.GET("", app.Controllers.Customer.InstallationController.GetInstallationRequests)
-			requestSubGroup := requests.Group("/:requestID")
-			{
-				requestSubGroup.GET("", app.Controllers.Customer.InstallationController.GetInstallationRequest)
-				requestSubGroup.PUT("/cancel", app.Controllers.Customer.InstallationController.CancelInstallationRequest)
-
-				bids := requestSubGroup.Group("/bid")
-				{
-					bids.GET("", app.Controllers.Customer.BidController.GetBids)
-					bidsSubGroup := bids.Group("/:bidID")
-					{
-						bidsSubGroup.GET("", app.Controllers.Customer.BidController.GetBid)
-						bidsSubGroup.POST("/accept", app.Controllers.Customer.BidController.AcceptBid)
-						bidsSubGroup.POST("/reject", app.Controllers.Customer.BidController.RejectBid)
-					}
-				}
-			}
-		}
-
-		panels := installations.Group("/panel")
-		{
-			panels.GET("", app.Controllers.Customer.InstallationController.GetCustomerPanels)
-			panelsSubGroup := panels.Group("/:panelID")
-			{
-				panelsSubGroup.GET("", app.Controllers.Customer.InstallationController.GetCustomerPanel)
-				panelsSubGroup.GET("/guarantee/violation", app.Controllers.Customer.InstallationController.GetPanelGuaranteeViolation)
-				panelsSubGroup.GET("/maintenance", app.Controllers.Customer.MaintenanceController.GetPanelMaintenanceRequests)
-			}
-		}
-	}
-
 	maintenances := routerGroup.Group("/maintenance/request")
 	{
 		maintenances.GET("/level", app.Controllers.Customer.MaintenanceController.GetMaintenanceUrgencyLevels)

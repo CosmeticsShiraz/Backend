@@ -19,44 +19,6 @@ func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		}
 	}
 
-	installations := routerGroup.Group("/installation")
-	{
-		requests := installations.Group("/request")
-		{
-			requests.GET("", app.Controllers.Admin.InstallationController.GetInstallationRequests)
-			requestSubGroup := requests.Group("/:requestID")
-			{
-				requestSubGroup.GET("", app.Controllers.Admin.InstallationController.GetInstallationRequest)
-				requestSubGroup.DELETE("", app.Controllers.Admin.InstallationController.DeleteInstallationRequest)
-				requestSubGroup.PUT("", app.Controllers.Admin.InstallationController.UpdateInstallationRequest)
-				requestSubGroup.GET("/bid", app.Controllers.Admin.BidController.GetBids)
-			}
-		}
-
-		panels := installations.Group("/panel")
-		{
-			panels.GET("", app.Controllers.Admin.InstallationController.GetPanels)
-			panels.GET(status, app.Controllers.Admin.InstallationController.GetAllPanelStatuses)
-			panelsSubGroup := panels.Group("/:panelID")
-			{
-				panelsSubGroup.GET("", app.Controllers.Admin.InstallationController.GetPanel)
-				panelsSubGroup.PUT("", app.Controllers.Admin.InstallationController.UpdatePanel)
-				panelsSubGroup.DELETE("", app.Controllers.Admin.InstallationController.DeletePanel)
-			}
-		}
-	}
-
-	bids := routerGroup.Group("/bids")
-	{
-		bids.GET("")
-		bidsSubGroup := bids.Group("/:bidID")
-		{
-			bidsSubGroup.GET("")
-			bidsSubGroup.PUT("")
-			bidsSubGroup.DELETE("")
-		}
-	}
-
 	accessManagement := routerGroup.Group("")
 	// accessManagement.Use(app.Middlewares.Auth.RequirePermission([]enums.PermissionType{enums.ManageUsers, enums.ManageRoles}))
 	{
