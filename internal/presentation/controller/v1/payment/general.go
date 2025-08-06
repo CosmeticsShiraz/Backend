@@ -21,8 +21,3 @@ func NewGeneralPaymentController(
 		paymentService: paymentService,
 	}
 }
-
-func (corporationController *GeneralPaymentController) GetPaymentMethods(ctx *gin.Context) {
-	methods := corporationController.paymentService.GetPaymentMethods()
-	controller.Response(ctx, 200, "", methods)
-}

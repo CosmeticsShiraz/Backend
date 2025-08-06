@@ -6,7 +6,6 @@ const (
 	SuperAdmin RoleName = iota + 1
 	Customer
 	Technician
-	CorporationManager
 	SupportAgent
 	ContentManager
 	Moderator
@@ -19,12 +18,6 @@ var rolePermissions = map[RoleName][]PermissionType{
 	Customer: {},
 	Technician: {
 		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
-	},
-	CorporationManager: {
-		PanelViewAll, PanelCreate,
-		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
-		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-		ProfileViewPrivate, ProfileUpdate,
 	},
 	SupportAgent: {
 		TicketViewAll, TicketRespond, TicketClose, TicketComment,
@@ -50,8 +43,6 @@ func (role RoleName) String() string {
 		return "مشتری"
 	case Technician:
 		return "تکنسین"
-	case CorporationManager:
-		return "مدیر سازمان"
 	case SupportAgent:
 		return "پشتیبان"
 	case ContentManager:
@@ -67,7 +58,6 @@ func GetAllRoleNames() []RoleName {
 		SuperAdmin,
 		Customer,
 		Technician,
-		CorporationManager,
 		SupportAgent,
 		ContentManager,
 		Moderator,

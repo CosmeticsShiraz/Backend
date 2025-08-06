@@ -17,10 +17,6 @@ const (
 	UserRemoveRole
 	UserCreateRole
 
-	// Corporation Management
-	CorporationViewAll
-	CorporationApproveDecline
-
 	// Ticket Management
 	TicketViewAll
 	TicketRespond
@@ -36,11 +32,6 @@ const (
 	NewsCreate
 	NewsEdit
 	NewsDelete
-
-	// Corporation Role Permissions
-	// Panel Management
-	PanelViewAll
-	PanelCreate
 
 	// Maintenance Management
 	MaintenanceViewAll
@@ -61,7 +52,6 @@ const (
 const (
 	CategoryGeneral PermissionCategory = iota + 1
 	CategoryUser
-	CategoryCorporation
 	CategoryTicket
 	CategoryReport
 	CategoryNews
@@ -83,10 +73,6 @@ var permissionNames = map[PermissionType]string{
 	UserManageRolePermissions: "user.manageRolePermissions",
 	UserRemoveRole:            "user.removeRole",
 	UserCreateRole:            "user.createRole",
-
-	// Corporation Management
-	CorporationViewAll:        "corporation.viewAll",
-	CorporationApproveDecline: "corporation.approveDecline",
 
 	// Ticket Management
 	TicketViewAll: "ticket.viewAll",
@@ -137,10 +123,6 @@ var permissionDescriptions = map[PermissionType]string{
 	UserRemoveRole:            "حذف نقش",
 	UserCreateRole:            "ایجاد نقش جدید",
 
-	// Corporation Management
-	CorporationViewAll:        "مشاهده لیست شرکت‌ها",
-	CorporationApproveDecline: "تایید/رد درخواست شرکت",
-
 	// Ticket Management
 	TicketViewAll: "مشاهده لیست تیکت‌ها",
 	TicketRespond: "پاسخ به تیکت",
@@ -189,10 +171,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	UserManageRolePermissions: CategoryUser,
 	UserRemoveRole:            CategoryUser,
 	UserCreateRole:            CategoryUser,
-
-	// Corporation Management
-	CorporationViewAll:        CategoryCorporation,
-	CorporationApproveDecline: CategoryCorporation,
 
 	// Ticket Management
 	TicketViewAll: CategoryTicket,
@@ -257,8 +235,6 @@ func (category PermissionCategory) String() string {
 		return "عمومی"
 	case CategoryUser:
 		return "مدیریت کاربران"
-	case CategoryCorporation:
-		return "مدیریت شرکت‌ها"
 	case CategoryTicket:
 		return "مدیریت تیکت"
 	case CategoryReport:
@@ -285,9 +261,6 @@ func GetAllPermissionTypes() []PermissionType {
 		UserViewAll, UserBanUnban, UserChangeRole, UserViewRoles,
 		UserManageRolePermissions, UserRemoveRole, UserCreateRole,
 
-		// Corporation Management
-		CorporationViewAll, CorporationApproveDecline,
-
 		// Ticket Management
 		TicketViewAll, TicketRespond, TicketClose, TicketComment,
 
@@ -297,22 +270,6 @@ func GetAllPermissionTypes() []PermissionType {
 		// News Management
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
 
-		// Panel Management
-		PanelViewAll, PanelCreate,
-
-		// Maintenance Management
-		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
-
-		// Guarantee Management
-		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-
-		// Profile Management
-		ProfileViewPrivate, ProfileUpdate,
-	}
-}
-
-func GetCorporationPermissionTypes() []PermissionType {
-	return []PermissionType{
 		// Panel Management
 		PanelViewAll, PanelCreate,
 

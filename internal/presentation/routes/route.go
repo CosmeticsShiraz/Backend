@@ -21,7 +21,6 @@ func Run(ginEngine *gin.Engine, app *wire.Application) {
 	v1 := ginEngine.Group("/v1")
 	registerGeneralRoutes(v1, app)
 	registerCustomerRoutes(v1, app)
-	registerCorporationRoutes(v1, app)
 	registerAdminRoutes(v1, app)
 }
 
@@ -37,13 +36,6 @@ func registerCustomerRoutes(v1 *gin.RouterGroup, app *wire.Application) {
 	wsUser := v1.Group("/user")
 	wsUser.Use(app.Middlewares.WebsocketMiddleware.UpgradeToWebSocket)
 	wsv1.SetupCustomerRoutes(wsUser, app)
-}
-
-func registerCorporationRoutes(v1 *gin.RouterGroup, app *wire.Application) {
-	corporation := v1.Group("/corp")
-	corporation.Use(app.Middlewares.Authentication.AuthRequired)
-	// corporation.Use(app.Middlewares.Authentication.RequiredWithPermission([]enum.PermissionType{enum.AccessCorporation}))
-	httpv1.SetupCorporationRoutes(corporation, app)
 }
 
 func registerAdminRoutes(v1 *gin.RouterGroup, app *wire.Application) {

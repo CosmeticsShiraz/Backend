@@ -15,25 +15,6 @@ func SetupCustomerRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		profile.PUT("", app.Controllers.Customer.UserController.UpdateProfile)
 	}
 
-	corps := routerGroup.Group("/corps")
-	{
-		corps.GET("", app.Controllers.Customer.CorporationController.GetUserCorporations)
-		registration := corps.Group("/registration")
-		{
-			registration.POST("/basic", app.Controllers.Customer.CorporationController.Register)
-			corpsSubgroup := registration.Group("/:corporationID")
-			{
-				corpsSubgroup.PUT("/basic", app.Controllers.Customer.CorporationController.UpdateRegister)
-				corpsSubgroup.POST("/contacts", app.Controllers.Customer.CorporationController.AddContactInformation)
-				corpsSubgroup.DELETE("/contacts/:contactID", app.Controllers.Customer.CorporationController.DeleteContactInformation)
-				corpsSubgroup.POST("/address", app.Controllers.Customer.CorporationController.AddAddress)
-				corpsSubgroup.DELETE("/address/:addressID", app.Controllers.Customer.CorporationController.DeleteAddress)
-				corpsSubgroup.PUT("/certificates", app.Controllers.Customer.CorporationController.SubmitCertificateFiles)
-				corpsSubgroup.GET("", app.Controllers.Customer.CorporationController.GetCorporationPrivateDetails)
-			}
-		}
-	}
-
 	maintenances := routerGroup.Group("/maintenance/request")
 	{
 		maintenances.GET("/level", app.Controllers.Customer.MaintenanceController.GetMaintenanceUrgencyLevels)
@@ -56,7 +37,6 @@ func SetupCustomerRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 
 	chat := routerGroup.Group("/chat")
 	{
-		chat.POST("/room/:corporationID", app.Controllers.Customer.ChatController.CreateOrGetRoom)
 		chat.GET("/room", app.Controllers.Customer.ChatController.GetUserRooms)
 		chat.GET("/room/:roomID/messages", app.Controllers.Customer.ChatController.GetMessages)
 		chat.PUT("/room/:roomID/block", app.Controllers.Customer.ChatController.BlockRoom)

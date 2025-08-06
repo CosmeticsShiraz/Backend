@@ -79,7 +79,6 @@ var English = map[string]interface{}{
 		"userRegister":               "Registration Successful! Please check your messages to verify your account and complete the registration process.",
 		"phoneVerification":          "Your phone has been successfully verified.",
 		"login":                      "Logged in successfully.",
-		"changeLogo":                 "Corporation logo has been changed.",
 		"addAddress":                 "Address added successfully.",
 		"editAddress":                "Address edited successfully.",
 		"deleteAddress":              "Address deleted successfully.",
