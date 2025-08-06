@@ -24,7 +24,6 @@ var rolePermissions = map[RoleName][]PermissionType{
 		PanelViewAll, PanelCreate,
 		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
 		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,
 		ProfileViewPrivate, ProfileUpdate,
 	},
 	SupportAgent: {
@@ -33,9 +32,6 @@ var rolePermissions = map[RoleName][]PermissionType{
 	},
 	ContentManager: {
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
-	},
-	Moderator: {
-		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,
 	},
 }
 

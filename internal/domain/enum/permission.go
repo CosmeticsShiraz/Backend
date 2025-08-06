@@ -36,12 +36,6 @@ const (
 	ReportViewAll
 	ReportRespond
 
-	// Blog Management (Admin)
-	AdminBlogViewAll
-	AdminBlogCreate
-	AdminBlogEdit
-	AdminBlogDelete
-
 	// News Management
 	NewsViewAll
 	NewsCreate
@@ -64,12 +58,6 @@ const (
 	GuaranteeCreate
 	GuaranteeArchiveUnarchive
 
-	// Blog Management (Corporation)
-	CorpBlogViewAll
-	CorpBlogCreate
-	CorpBlogEdit
-	CorpBlogDelete
-
 	// Profile Management
 	ProfileViewPrivate
 	ProfileUpdate
@@ -82,7 +70,6 @@ const (
 	CategoryInstallationRequest
 	CategoryTicket
 	CategoryReport
-	CategoryBlog
 	CategoryNews
 	CategoryPanel
 	CategoryMaintenance
@@ -122,12 +109,6 @@ var permissionNames = map[PermissionType]string{
 	ReportViewAll: "report.viewAll",
 	ReportRespond: "report.respond",
 
-	// Blog Management (Admin)
-	AdminBlogViewAll: "adminBlog.viewAll",
-	AdminBlogCreate:  "adminBlog.create",
-	AdminBlogEdit:    "adminBlog.edit",
-	AdminBlogDelete:  "adminBlog.delete",
-
 	// News Management
 	NewsViewAll: "news.viewAll",
 	NewsCreate:  "news.create",
@@ -148,12 +129,6 @@ var permissionNames = map[PermissionType]string{
 	GuaranteeViewAll:          "guarantee.viewAll",
 	GuaranteeCreate:           "guarantee.create",
 	GuaranteeArchiveUnarchive: "guarantee.archiveUnarchive",
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll: "corpBlog.viewAll",
-	CorpBlogCreate:  "corpBlog.create",
-	CorpBlogEdit:    "corpBlog.edit",
-	CorpBlogDelete:  "corpBlog.delete",
 
 	// Profile Management
 	ProfileViewPrivate: "profile.viewPrivate",
@@ -192,12 +167,6 @@ var permissionDescriptions = map[PermissionType]string{
 	ReportViewAll: "مشاهده لیست گزارش‌ها",
 	ReportRespond: "پاسخ به گزارش",
 
-	// Blog Management (Admin)
-	AdminBlogViewAll: "مشاهده لیست بلاگ‌ها",
-	AdminBlogCreate:  "ایجاد بلاگ جدید",
-	AdminBlogEdit:    "ویرایش بلاگ",
-	AdminBlogDelete:  "حذف بلاگ",
-
 	// News Management
 	NewsViewAll: "مشاهده لیست اخبار",
 	NewsCreate:  "ایجاد خبر جدید",
@@ -218,12 +187,6 @@ var permissionDescriptions = map[PermissionType]string{
 	GuaranteeViewAll:          "مشاهده لیست ضمانت‌ها",
 	GuaranteeCreate:           "ایجاد ضمانت جدید",
 	GuaranteeArchiveUnarchive: "آرشیو/رفع آرشیو ضمانت",
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll: "مشاهده لیست بلاگ‌ها",
-	CorpBlogCreate:  "ایجاد بلاگ جدید",
-	CorpBlogEdit:    "ویرایش بلاگ",
-	CorpBlogDelete:  "حذف بلاگ",
 
 	// Profile Management
 	ProfileViewPrivate: "مشاهده اطلاعات خصوصی پروفایل",
@@ -262,12 +225,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	ReportViewAll: CategoryReport,
 	ReportRespond: CategoryReport,
 
-	// Blog Management (Admin)
-	AdminBlogViewAll: CategoryBlog,
-	AdminBlogCreate:  CategoryBlog,
-	AdminBlogEdit:    CategoryBlog,
-	AdminBlogDelete:  CategoryBlog,
-
 	// News Management
 	NewsViewAll: CategoryNews,
 	NewsCreate:  CategoryNews,
@@ -288,12 +245,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	GuaranteeViewAll:          CategoryGuarantee,
 	GuaranteeCreate:           CategoryGuarantee,
 	GuaranteeArchiveUnarchive: CategoryGuarantee,
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll: CategoryBlog,
-	CorpBlogCreate:  CategoryBlog,
-	CorpBlogEdit:    CategoryBlog,
-	CorpBlogDelete:  CategoryBlog,
 
 	// Profile Management
 	ProfileViewPrivate: CategoryProfile,
@@ -335,8 +286,6 @@ func (category PermissionCategory) String() string {
 		return "مدیریت تیکت"
 	case CategoryReport:
 		return "مدیریت گزارشات"
-	case CategoryBlog:
-		return "مدیریت بلاگ"
 	case CategoryNews:
 		return "مدیریت اخبار"
 	case CategoryPanel:
@@ -371,9 +320,6 @@ func GetAllPermissionTypes() []PermissionType {
 		// Report Management
 		ReportViewAll, ReportRespond,
 
-		// Blog Management (Admin)
-		AdminBlogViewAll, AdminBlogCreate, AdminBlogEdit, AdminBlogDelete,
-
 		// News Management
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
 
@@ -385,9 +331,6 @@ func GetAllPermissionTypes() []PermissionType {
 
 		// Guarantee Management
 		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-
-		// Blog Management (Corporation)
-		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,
 
 		// Profile Management
 		ProfileViewPrivate, ProfileUpdate,
@@ -404,9 +347,6 @@ func GetCorporationPermissionTypes() []PermissionType {
 
 		// Guarantee Management
 		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-
-		// Blog Management (Corporation)
-		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,
 
 		// Profile Management
 		ProfileViewPrivate, ProfileUpdate,

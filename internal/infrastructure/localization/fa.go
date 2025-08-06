@@ -29,7 +29,6 @@ var Persian = map[string]interface{}{
 	"news":                "اخبار",
 	"title":              "عنوان",
 	"media":               "محتوا",
-	"blog":                "بلاگ",
 	"post":                "پست",
 	"like":                "لایک",
 	"unlike":              "حذف لایک",

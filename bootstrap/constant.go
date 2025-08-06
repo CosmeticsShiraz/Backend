@@ -76,10 +76,8 @@ type ErrorField struct {
 	GuaranteeViolation  string
 	News                string
 	Media               string
-	Blog                string
 	Post                string
 	Like                string
-	CorporationReview   string
 }
 
 type ErrorTag struct {
@@ -247,10 +245,8 @@ func NewConstants() *Constants {
 			GuaranteeViolation:  "guaranteeViolation",
 			News:                "news",
 			Media:               "media",
-			Blog:                "blog",
 			Post:                "post",
 			Like:                "like",
-			CorporationReview:   "corporationReview",
 		},
 		Tag: ErrorTag{
 			AlreadyRegistered:      "alreadyRegistered",
@@ -383,12 +379,4 @@ func (path *BucketPath) GetNewsMediaPath(newsID uint, MediaFileName string) stri
 
 func (path *BucketPath) GetNewsCoverImagePath(newsID uint, mediaFileName string) string {
 	return fmt.Sprintf("news/%d/cover-image/%s", newsID, mediaFileName)
-}
-
-func (path *BucketPath) GetBlogMediaPath(corporationID uint, mediaFileName string) string {
-	return fmt.Sprintf("corporation/%d/blog/media/%s", corporationID, mediaFileName)
-}
-
-func (path *BucketPath) GetBlogCoverImagePath(corporationID uint, mediaFileName string) string {
-	return fmt.Sprintf("corporation/%d/blog/cover-image/%s", corporationID, mediaFileName)
 }

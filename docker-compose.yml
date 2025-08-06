@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ghcr.io/CosmeticsShiraz/backend
+    image: ghcr.io/cosmeticsshiraz/backend
     container_name: backend
     restart: unless-stopped
     deploy:

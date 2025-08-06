@@ -29,7 +29,6 @@ var English = map[string]interface{}{
 	"news":                "news",
 	"title":              "title",
 	"media":               "media",
-	"blog":                "blog",
 	"post":                "post",
 	"like":                "like",
 	"unlike":              "unlike",

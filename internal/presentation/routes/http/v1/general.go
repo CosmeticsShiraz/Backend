@@ -73,17 +73,4 @@ func SetupGeneralRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		news.GET("/:newsID", app.Controllers.General.NewsController.GetNews)
 		news.GET("/:newsID/media/:mediaID", app.Controllers.General.NewsController.GetNewsMedia)
 	}
-
-	blogs := routerGroup.Group("/blog")
-	{
-		blogs.GET("", app.Controllers.General.BlogController.GetPosts)
-		blogs.GET("/corporation/:corporationID", app.Controllers.General.BlogController.GetCorporationPosts)
-		blogs.GET("/:postID", app.Controllers.General.BlogController.GetPost)
-		blogs.GET("/:postID/media/:mediaID", app.Controllers.General.BlogController.GetPostMedia)
-	}
-
-	tickets := routerGroup.Group("/ticket")
-	{
-		tickets.GET(status, app.Controllers.General.TicketController.GetTicketStatuses)
-	}
 }

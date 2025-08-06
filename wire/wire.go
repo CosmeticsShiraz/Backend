@@ -29,7 +29,6 @@ import (
 	infraStorage "github.com/CosmeticsShiraz/Backend/internal/infrastructure/storage"
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/blog"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/chat"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/corporation"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/guarantee"
@@ -67,7 +66,6 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewGuaranteeRepository,
 	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
-	infraPostgres.NewBlogRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
 	wire.Bind(new(domainPostgres.InstallationRepository), new(*infraPostgres.InstallationRepository)),
 	wire.Bind(new(domainPostgres.AddressRepository), new(*infraPostgres.AddressRepository)),
@@ -81,7 +79,6 @@ var RepositoryProviderSet = wire.NewSet(
 	wire.Bind(new(domainPostgres.GuaranteeRepository), new(*infraPostgres.GuaranteeRepository)),
 	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
 	wire.Bind(new(domainPostgres.NewsRepository), new(*infraPostgres.NewsRepository)),
-	wire.Bind(new(domainPostgres.BlogRepository), new(*infraPostgres.BlogRepository)),
 )
 
 var ServiceProviderSet = wire.NewSet(
@@ -104,7 +101,6 @@ var ServiceProviderSet = wire.NewSet(
 	service.NewGuaranteeService,
 	service.NewPaymentService,
 	service.NewNewsService,
-	service.NewBlogService,
 	wire.Bind(new(usecase.UserService), new(*service.UserService)),
 	wire.Bind(new(usecase.OTPService), new(*service.OTPService)),
 	wire.Bind(new(communication.SMSService), new(*sms.SMSService)),
@@ -121,7 +117,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(usecase.GuaranteeService), new(*service.GuaranteeService)),
 	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
 	wire.Bind(new(usecase.NewsService), new(*service.NewsService)),
-	wire.Bind(new(usecase.BlogService), new(*service.BlogService)),
 )
 
 var AdapterProviderSet = wire.NewSet(
@@ -144,7 +139,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 	notification.NewGeneralNotificationController,
 	installation.NewGeneralInstallationController,
 	news.NewGeneralNewsController,
-	blog.NewGeneralBlogController,
 	payment.NewGeneralPaymentController,
 	ticket.NewGeneralTicketController,
 	wire.Struct(new(GeneralControllers), "*"),
@@ -160,7 +154,6 @@ var CustomerControllerProviderSet = wire.NewSet(
 	maintenance.NewCustomerMaintenanceController,
 	ticket.NewCustomerTicketController,
 	report.NewCustomerReportController,
-	blog.NewCustomerBlogController,
 	wire.Struct(new(CustomerControllers), "*"),
 )
 
@@ -170,7 +163,6 @@ var CorporationControllerProviderSet = wire.NewSet(
 	chat.NewCorporationChatController,
 	maintenance.NewCorporationMaintenanceController,
 	guarantee.NewCorporationGuaranteeController,
-	blog.NewCorporationBlogController,
 	wire.Struct(new(CorporationControllers), "*"),
 )
 
@@ -333,7 +325,6 @@ type GeneralControllers struct {
 	NotificationController *notification.GeneralNotificationController
 	InstallationController *installation.GeneralInstallationController
 	NewsController         *news.GeneralNewsController
-	BlogController         *blog.GeneralBlogController
 	PaymentController      *payment.GeneralPaymentController
 	TicketController       *ticket.GeneralTicketController
 }
@@ -348,7 +339,6 @@ type CustomerControllers struct {
 	MaintenanceController  *maintenance.CustomerMaintenanceController
 	TicketController       *ticket.CustomerTicketController
 	ReportController       *report.CustomerReportController
-	BlogController         *blog.CustomerBlogController
 }
 
 type CorporationControllers struct {
@@ -357,7 +347,6 @@ type CorporationControllers struct {
 	ChatController         *chat.CorporationChatController
 	MaintenanceController  *maintenance.CorporationMaintenanceController
 	GuaranteeController    *guarantee.CorporationGuaranteeController
-	BlogController         *blog.CorporationBlogController
 }
 
 type AdminControllers struct {
