@@ -1,0 +1,26 @@
+package usecase
+
+import (
+	maintenancedto "github.com/CosmeticsShiraz/Backend/internal/application/dto/maintenance"
+	"github.com/CosmeticsShiraz/Backend/internal/domain/enum"
+)
+
+type MaintenanceService interface {
+	GetMaintenanceUrgencyLevels() []maintenancedto.MaintenanceStatusesResponse
+	GetMaintenanceRequestStatuses(agent enum.AgentType) []maintenancedto.MaintenanceStatusesResponse
+	CreateMaintenanceRequest(requestInfo maintenancedto.CreateMaintenanceRequest) error
+	GetCustomerMaintenanceRequests(requestInfo maintenancedto.CustomerMaintenanceListRequest) ([]maintenancedto.CustomerMaintenanceRequestResponse, error)
+	GetCustomerPanelMaintenanceRequests(listInfo maintenancedto.CustomerPanelMaintenanceListRequest) ([]maintenancedto.CustomerMaintenanceRequestResponse, error)
+	GetCustomerMaintenanceRequest(maintenanceInfo maintenancedto.CustomerMaintenanceRequest) (maintenancedto.CustomerMaintenanceRequestResponse, error)
+	UpdateMaintenanceRequest(updateRequest maintenancedto.UpdateCustomerRequest) error
+	CancelMaintenanceRequest(maintenanceInfo maintenancedto.CustomerMaintenanceRequest) error
+	ApproveMaintenanceRecord(maintenanceInfo maintenancedto.CustomerMaintenanceRequest) error
+	GetCorporationMaintenanceRequests(listInfo maintenancedto.CorporationMaintenanceListRequest) ([]maintenancedto.CorporationMaintenanceListResponse, error)
+	GetCorporationMaintenanceRequest(maintenanceInfo maintenancedto.CorporationMaintenanceRequest) (maintenancedto.CorporationMaintenanceResponse, error)
+	AcceptMaintenanceRequest(maintenanceInfo maintenancedto.CorporationMaintenanceRequest) error
+	RejectMaintenanceRequest(maintenanceInfo maintenancedto.CorporationMaintenanceRequest) error
+	CreateMaintenanceRecord(recordInfo maintenancedto.CreateMaintenanceRecordRequest) error
+	UpdateMaintenanceRecord(recordInfo maintenancedto.UpdateMaintenanceRecordRequest) error
+	ValidateCustomerRecord(recordID, userID uint) error
+	GetRequestByAdmin(recordID uint) (maintenancedto.AdminMaintenanceRequestResponse, error)
+}
