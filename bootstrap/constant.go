@@ -14,8 +14,6 @@ type Constants struct {
 	JWTKeysPath         JWTKeysPath
 	Metrics             Metrics
 	AddressOwners       AddressOwners
-	ReportObjectTypes   ReportObjectTypes
-	ReportOwners        ReportOwners
 	RabbitMQ            RabbitMQConstants
 }
 
@@ -60,7 +58,6 @@ type ErrorField struct {
 	NotificationSetting string
 	Role                string
 	Permission          string
-	Report              string
 	PaymentTerm         string
 	News                string
 	Media               string
@@ -130,10 +127,6 @@ type AddressOwners struct {
 	User                string
 }
 
-type ReportOwners struct {
-	User string
-}
-
 type RabbitMQConstants struct {
 	Exchange Exchanges
 	Queue    Queues
@@ -199,7 +192,6 @@ func NewConstants() *Constants {
 			Notification:        "notification",
 			Role:                "role",
 			Permission:          "permission",
-			Report:              "report",
 			NotificationSetting: "notificationSetting",
 			PaymentTerm:         "paymentTerm",
 			News:                "news",
@@ -263,10 +255,6 @@ func NewConstants() *Constants {
 		},
 		AddressOwners: AddressOwners{
 			User:                "users",
-		},
-
-		ReportOwners: ReportOwners{
-			User: "users",
 		},
 		RabbitMQ: RabbitMQConstants{
 			Exchange: Exchanges{

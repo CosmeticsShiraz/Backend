@@ -38,7 +38,6 @@ func main() {
 		&entity.Role{},
 		&entity.User{},
 		&entity.PaymentTerm{},
-		&entity.Report{},
 		&entity.Media{},
 		&entity.News{},
 		&entity.Post{},

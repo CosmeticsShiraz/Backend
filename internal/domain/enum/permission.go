@@ -17,10 +17,6 @@ const (
 	UserRemoveRole
 	UserCreateRole
 
-	// Report Management
-	ReportViewAll
-	ReportRespond
-
 	// News Management
 	NewsViewAll
 	NewsCreate
@@ -30,14 +26,6 @@ const (
 	// Profile Management
 	ProfileViewPrivate
 	ProfileUpdate
-)
-
-const (
-	CategoryGeneral PermissionCategory = iota + 1
-	CategoryUser
-	CategoryReport
-	CategoryNews
-	CategoryProfile
 )
 
 var permissionNames = map[PermissionType]string{
@@ -52,10 +40,6 @@ var permissionNames = map[PermissionType]string{
 	UserManageRolePermissions: "user.manageRolePermissions",
 	UserRemoveRole:            "user.removeRole",
 	UserCreateRole:            "user.createRole",
-
-	// Report Management
-	ReportViewAll: "report.viewAll",
-	ReportRespond: "report.respond",
 
 	// News Management
 	NewsViewAll: "news.viewAll",
@@ -81,10 +65,6 @@ var permissionDescriptions = map[PermissionType]string{
 	UserRemoveRole:            "حذف نقش",
 	UserCreateRole:            "ایجاد نقش جدید",
 
-	// Report Management
-	ReportViewAll: "مشاهده لیست گزارش‌ها",
-	ReportRespond: "پاسخ به گزارش",
-
 	// News Management
 	NewsViewAll: "مشاهده لیست اخبار",
 	NewsCreate:  "ایجاد خبر جدید",
@@ -108,10 +88,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	UserManageRolePermissions: CategoryUser,
 	UserRemoveRole:            CategoryUser,
 	UserCreateRole:            CategoryUser,
-
-	// Report Management
-	ReportViewAll: CategoryReport,
-	ReportRespond: CategoryReport,
 
 	// News Management
 	NewsViewAll: CategoryNews,
@@ -151,8 +127,6 @@ func (category PermissionCategory) String() string {
 		return "عمومی"
 	case CategoryUser:
 		return "مدیریت کاربران"
-	case CategoryReport:
-		return "مدیریت گزارشات"
 	case CategoryNews:
 		return "مدیریت اخبار"
 	case CategoryProfile:
@@ -168,9 +142,6 @@ func GetAllPermissionTypes() []PermissionType {
 		// User Management
 		UserViewAll, UserBanUnban, UserChangeRole, UserViewRoles,
 		UserManageRolePermissions, UserRemoveRole, UserCreateRole,
-
-		// Report Management
-		ReportViewAll, ReportRespond,
 
 		// News Management
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
