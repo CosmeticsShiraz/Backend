@@ -16,7 +16,7 @@ func main() {
 
 	config := bootstrap.Run()
 
-	app, err := wire.InitializeApplication(config, hub)
+	app, err := wire.InitializeApplication(config)
 	if err != nil {
 		panic(err)
 	}
@@ -30,7 +30,6 @@ func main() {
 		&entity.User{},
 		&entity.Media{},
 		&entity.News{},
-		&entity.Post{},
 		&entity.Like{},
 	)
 
