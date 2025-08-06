@@ -139,19 +139,16 @@ type Options struct {
 
 type AddressOwners struct {
 	User                string
-	Corporation         string
 	Panel               string
 	MaintenanceRequest  string
 }
 
 type TicketOwners struct {
 	User        string
-	Corporation string
 }
 
 type TicketCommentOwners struct {
 	User        string
-	Corporation string
 	Admin       string
 }
 
@@ -216,7 +213,6 @@ func NewConstants() *Constants {
 			Email:               "email",
 			Password:            "password",
 			OTP:                 "otp",
-			Corporation:         "corporation",
 			NationalID:          "nationalID",
 			RegistrationNumber:  "registrationNumber",
 			IBAN:                "iban",
@@ -303,17 +299,7 @@ func NewConstants() *Constants {
 		},
 		AddressOwners: AddressOwners{
 			User:                "users",
-			Corporation:         "corporations",
 			Panel:               "panels",
-		},
-		TicketOwners: TicketOwners{
-			User:        "users",
-			Corporation: "corporations",
-		},
-		TicketCommentOwners: TicketCommentOwners{
-			User:        "users",
-			Corporation: "corporations",
-			Admin:       "admins",
 		},
 
 		ReportObjectTypes: ReportObjectTypes{
@@ -352,24 +338,12 @@ func (r *RedisKey) GenerateOTPKey(value string) string {
 	return fmt.Sprintf("otp:%s", value)
 }
 
-func (path *BucketPath) GetVATTaxpayerCertificatePath(corporationID uint, certificateFilename string) string {
-	return fmt.Sprintf("corporation/%d/taxpayer/%s", corporationID, certificateFilename)
-}
-
-func (path *BucketPath) GetOfficialNewspaperADPath(corporationID uint, certificateFilename string) string {
-	return fmt.Sprintf("corporation/%d/newspaper-ad/%s", corporationID, certificateFilename)
-}
-
 func (path *BucketPath) GetUserProfilePath(userID uint, pictureFileName string) string {
 	return fmt.Sprintf("user/%d/profile/%s", userID, pictureFileName)
 }
 
 func (path *BucketPath) GetTicketImagePath(ticketID uint, imageFilename string) string {
 	return fmt.Sprintf("tickets/%d/%s", ticketID, imageFilename)
-}
-
-func (path *BucketPath) GetCorporationLogoPath(corporationID uint, logoFileName string) string {
-	return fmt.Sprintf("corporation/%d/logo/%s", corporationID, logoFileName)
 }
 
 func (path *BucketPath) GetNewsMediaPath(newsID uint, MediaFileName string) string {
