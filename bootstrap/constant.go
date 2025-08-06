@@ -14,18 +14,12 @@ type Constants struct {
 	JWTKeysPath         JWTKeysPath
 	Metrics             Metrics
 	AddressOwners       AddressOwners
-	TicketOwners        TicketOwners
-	TicketCommentOwners TicketCommentOwners
-	ReportObjectTypes   ReportObjectTypes
-	ReportOwners        ReportOwners
-	RabbitMQ            RabbitMQConstants
 }
 
 type Context struct {
 	Translator                   string
 	IsLoadedValidationTranslator string
 	ID                           string
-	WebsocketConnection          string
 }
 
 type LogLevel struct {
@@ -48,7 +42,6 @@ type ErrorField struct {
 	Email               string
 	Password            string
 	OTP                 string
-	Corporation         string
 	NationalID          string
 	RegistrationNumber  string
 	IBAN                string
@@ -57,29 +50,12 @@ type ErrorField struct {
 	Province            string
 	City                string
 	Page                string
-	ContactType         string
-	Room                string
-	NotificationType    string
-	Notification        string
-	NotificationSetting string
-	Panel               string
-	MaintenanceRequest  string
-	MaintenanceRecord   string
-	Ticket              string
 	Role                string
 	Permission          string
-	TicketComment       string
-	Report              string
-	ContactInformation  string
-	PaymentTerm         string
-	Guarantee           string
-	GuaranteeViolation  string
 	News                string
 	Media               string
-	Blog                string
 	Post                string
 	Like                string
-	CorporationReview   string
 }
 
 type ErrorTag struct {
@@ -142,43 +118,6 @@ type Options struct {
 
 type AddressOwners struct {
 	User                string
-	Corporation         string
-	Panel               string
-	MaintenanceRequest  string
-}
-
-type TicketOwners struct {
-	User        string
-	Corporation string
-}
-
-type TicketCommentOwners struct {
-	User        string
-	Corporation string
-	Admin       string
-}
-
-type ReportObjectTypes struct {
-	Maintenance string
-	Panel       string
-}
-
-type ReportOwners struct {
-	User string
-}
-
-type RabbitMQConstants struct {
-	Exchange Exchanges
-	Queue    Queues
-	Headers  Headers
-	Events   Events
-}
-
-type Exchanges struct {
-	Notifications string
-	DLX           string
-	TypeTopic     string
-	TypeFanout    string
 }
 
 type Queues struct {
@@ -191,20 +130,12 @@ type Headers struct {
 	DeadLetter string
 }
 
-type Events struct {
-	NotificationsEmail string
-	NotificationsPush  string
-	UserRegistered     string
-	SendNotification   string
-}
-
 func NewConstants() *Constants {
 	return &Constants{
 		Context: Context{
 			Translator:                   "translator",
 			IsLoadedValidationTranslator: "isLoadedValidationTranslator",
 			ID:                           "ID",
-			WebsocketConnection:          "wsConnection",
 		},
 		LogLevel: LogLevel{
 			Debug: "debug",
@@ -219,7 +150,6 @@ func NewConstants() *Constants {
 			Email:               "email",
 			Password:            "password",
 			OTP:                 "otp",
-			Corporation:         "corporation",
 			NationalID:          "nationalID",
 			RegistrationNumber:  "registrationNumber",
 			IBAN:                "iban",
@@ -228,29 +158,12 @@ func NewConstants() *Constants {
 			Province:            "province",
 			City:                "city",
 			Page:                "page",
-			ContactType:         "contactType",
-			Room:                "room",
-			NotificationType:    "notificationType",
-			Notification:        "notification",
-			Panel:               "panel",
-			MaintenanceRequest:  "maintenanceRequest",
-			MaintenanceRecord:   "maintenanceRecord",
-			Ticket:              "ticket",
 			Role:                "role",
 			Permission:          "permission",
-			TicketComment:       "ticketComment",
-			Report:              "report",
-			ContactInformation:  "contactInformation",
-			NotificationSetting: "notificationSetting",
-			PaymentTerm:         "paymentTerm",
-			Guarantee:           "guarantee",
-			GuaranteeViolation:  "guaranteeViolation",
 			News:                "news",
 			Media:               "media",
-			Blog:                "blog",
 			Post:                "post",
 			Like:                "like",
-			CorporationReview:   "corporationReview",
 		},
 		Tag: ErrorTag{
 			AlreadyRegistered:      "alreadyRegistered",
@@ -308,47 +221,6 @@ func NewConstants() *Constants {
 		},
 		AddressOwners: AddressOwners{
 			User:                "users",
-			Corporation:         "corporations",
-			Panel:               "panels",
-		},
-		TicketOwners: TicketOwners{
-			User:        "users",
-			Corporation: "corporations",
-		},
-		TicketCommentOwners: TicketCommentOwners{
-			User:        "users",
-			Corporation: "corporations",
-			Admin:       "admins",
-		},
-
-		ReportObjectTypes: ReportObjectTypes{
-			Maintenance: "maintenance",
-			Panel:       "panel",
-		},
-		ReportOwners: ReportOwners{
-			User: "users",
-		},
-		RabbitMQ: RabbitMQConstants{
-			Exchange: Exchanges{
-				Notifications: "notifications",
-				DLX:           "dlx_notifications",
-				TypeTopic:     "topic",
-				TypeFanout:    "fanout",
-			},
-			Queue: Queues{
-				DLQ: "dlq_notifications",
-			},
-			Headers: Headers{
-				RetryCount: "x-retry-count",
-				LastError:  "x-last-error",
-				DeadLetter: "x-dead-letter-exchange",
-			},
-			Events: Events{
-				NotificationsEmail: "Notifications.Email",
-				NotificationsPush:  "Notifications.Push",
-				UserRegistered:     "Users.Register",
-				SendNotification:   "Notifications.Send",
-			},
 		},
 	}
 }
@@ -357,24 +229,8 @@ func (r *RedisKey) GenerateOTPKey(value string) string {
 	return fmt.Sprintf("otp:%s", value)
 }
 
-func (path *BucketPath) GetVATTaxpayerCertificatePath(corporationID uint, certificateFilename string) string {
-	return fmt.Sprintf("corporation/%d/taxpayer/%s", corporationID, certificateFilename)
-}
-
-func (path *BucketPath) GetOfficialNewspaperADPath(corporationID uint, certificateFilename string) string {
-	return fmt.Sprintf("corporation/%d/newspaper-ad/%s", corporationID, certificateFilename)
-}
-
 func (path *BucketPath) GetUserProfilePath(userID uint, pictureFileName string) string {
 	return fmt.Sprintf("user/%d/profile/%s", userID, pictureFileName)
-}
-
-func (path *BucketPath) GetTicketImagePath(ticketID uint, imageFilename string) string {
-	return fmt.Sprintf("tickets/%d/%s", ticketID, imageFilename)
-}
-
-func (path *BucketPath) GetCorporationLogoPath(corporationID uint, logoFileName string) string {
-	return fmt.Sprintf("corporation/%d/logo/%s", corporationID, logoFileName)
 }
 
 func (path *BucketPath) GetNewsMediaPath(newsID uint, MediaFileName string) string {
@@ -383,12 +239,4 @@ func (path *BucketPath) GetNewsMediaPath(newsID uint, MediaFileName string) stri
 
 func (path *BucketPath) GetNewsCoverImagePath(newsID uint, mediaFileName string) string {
 	return fmt.Sprintf("news/%d/cover-image/%s", newsID, mediaFileName)
-}
-
-func (path *BucketPath) GetBlogMediaPath(corporationID uint, mediaFileName string) string {
-	return fmt.Sprintf("corporation/%d/blog/media/%s", corporationID, mediaFileName)
-}
-
-func (path *BucketPath) GetBlogCoverImagePath(corporationID uint, mediaFileName string) string {
-	return fmt.Sprintf("corporation/%d/blog/cover-image/%s", corporationID, mediaFileName)
 }

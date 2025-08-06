@@ -8,17 +8,6 @@ import (
 func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 	const status string = "/status"
 
-	ticket := routerGroup.Group("/ticket")
-	{
-		ticket.GET("", app.Controllers.Admin.TicketController.GetTickets)
-		ticketsSubGroup := ticket.Group("/:ticketID")
-		{
-			ticketsSubGroup.GET("/comments", app.Controllers.Admin.TicketController.GetComments)
-			ticketsSubGroup.POST("/comments", app.Controllers.Admin.TicketController.CreateComment)
-			ticketsSubGroup.POST("/resolve", app.Controllers.Admin.TicketController.ResolveTicket)
-		}
-	}
-
 	accessManagement := routerGroup.Group("")
 	// accessManagement.Use(app.Middlewares.Auth.RequirePermission([]enums.PermissionType{enums.ManageUsers, enums.ManageRoles}))
 	{
@@ -54,31 +43,6 @@ func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		userManagement.GET("", app.Controllers.Admin.UserController.GetUsers)
 		userManagement.PUT("/:userID/ban", app.Controllers.Admin.UserController.BanUser)
 		userManagement.PUT("/:userID/unban", app.Controllers.Admin.UserController.UnbanUser)
-	}
-
-	corporationManagement := routerGroup.Group("/corporation")
-	// put some role here
-	{
-		corporationManagement.GET("", app.Controllers.Admin.CorporationController.GetCorporations)
-		corporationManagement.GET(status, app.Controllers.Admin.CorporationController.GetCorporationStatus)
-		corporationSubGRoup := corporationManagement.Group("/:corporationID")
-		{
-			corporationSubGRoup.GET("", app.Controllers.Admin.CorporationController.GetCorporation)
-			corporationSubGRoup.POST("/approve", app.Controllers.Admin.CorporationController.ApproveCorporationRequest)
-			corporationSubGRoup.POST("/reject", app.Controllers.Admin.CorporationController.RejectCorporationRequest)
-			reviewSubGroup := corporationSubGRoup.Group("/review")
-			{
-				reviewSubGroup.GET("/action", app.Controllers.Admin.CorporationController.GetReviewActions)
-				reviewSubGroup.GET("", app.Controllers.Admin.CorporationController.GetCorporationReviews)
-			}
-		}
-	}
-
-	report := routerGroup.Group("/report")
-	{
-		report.GET("/maintenance", app.Controllers.Admin.ReportController.GetMaintenanceReports)
-		report.GET("/panel", app.Controllers.Admin.ReportController.GetPanelReports)
-		report.POST("/resolve/:reportID", app.Controllers.Admin.ReportController.ResolveReport)
 	}
 
 	news := routerGroup.Group("/news")

@@ -12,7 +12,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/domain/entity"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/enum"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/exception"
-	"github.com/CosmeticsShiraz/Backend/internal/domain/message"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/repository/postgres"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/repository/redis"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/s3"
@@ -27,7 +26,6 @@ type UserService struct {
 	jwtService          usecase.JWTService
 	smsService          communication.SMSService
 	emailService        communication.EmailService
-	rabbitMQ            message.Broker
 	s3Storage           s3.S3Storage
 	userRepository      postgres.UserRepository
 	userCacheRepository redis.UserCacheRepository
@@ -40,7 +38,6 @@ type UserServiceDeps struct {
 	JWTService          usecase.JWTService
 	SMSService          communication.SMSService
 	EmailService        communication.EmailService
-	RabbitMQ            message.Broker
 	S3Storage           s3.S3Storage
 	UserRepository      postgres.UserRepository
 	UserCacheRepository redis.UserCacheRepository
@@ -54,7 +51,6 @@ func NewUserService(deps UserServiceDeps) *UserService {
 		jwtService:          deps.JWTService,
 		smsService:          deps.SMSService,
 		emailService:        deps.EmailService,
-		rabbitMQ:            deps.RabbitMQ,
 		s3Storage:           deps.S3Storage,
 		userRepository:      deps.UserRepository,
 		userCacheRepository: deps.UserCacheRepository,
@@ -380,15 +376,6 @@ func (userService *UserService) Register(registerInfo userdto.BasicRegisterReque
 		redisKey := userService.constants.RedisKey.GenerateOTPKey(registerInfo.Phone)
 		err = userService.userCacheRepository.Set(context.Background(), redisKey, otp, time.Duration(expiryMinute)*time.Minute)
 		if err != nil {
-			return err
-		}
-
-		msg := struct {
-			UserID uint `json:"userID"`
-		}{
-			UserID: user.ID,
-		}
-		if err = userService.rabbitMQ.PublishMessage(userService.constants.RabbitMQ.Events.UserRegistered, msg); err != nil {
 			return err
 		}
 		// userService.smsService.SendOTP(registerInfo.Phone, otp)

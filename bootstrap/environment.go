@@ -18,10 +18,8 @@ type Env struct {
 	OTP                OTP
 	SMSGateway         SMSGateway
 	Pagination         Pagination
-	WebsocketSetting   WebsocketSetting
 	EmailSenderAccount EmailAccount
 	SuperAdmin         AdminCredentials
-	RabbitMQ           RabbitMQ
 }
 
 type Server struct {
@@ -67,10 +65,8 @@ type BucketName struct {
 	VATTaxpayerCertificate string
 	OfficialNewspaperAD    string
 	ProfilePic             string
-	TicketImage            string
 	LogoPic                string
 	NewsMedia              string
-	BlogMedia              string
 }
 
 type OTP struct {
@@ -88,14 +84,6 @@ type Pagination struct {
 	DefaultPageSize int
 }
 
-type WebsocketSetting struct {
-	WriteTimeout      time.Duration
-	ReadTimeout       time.Duration
-	PingPeriod        time.Duration
-	MaxMessageSize    int
-	MessageBufferSize int
-}
-
 type EmailAccount struct {
 	EmailFrom     string
 	EmailPassword string
@@ -110,16 +98,6 @@ type AdminCredentials struct {
 	Password     string
 	Email        string
 	NationalCode string
-}
-
-type RabbitMQ struct {
-	User          string
-	Password      string
-	Host          string
-	Port          string
-	VHost         string
-	MaxRetryCount int
-	RetryDelay    time.Duration
 }
 
 func NewEnvironments() *Env {
@@ -157,10 +135,8 @@ func NewEnvironments() *Env {
 				VATTaxpayerCertificate: os.Getenv("TAXPAYER_CERTIFICATE_BUCKET_NAME"),
 				OfficialNewspaperAD:    os.Getenv("OFFICIAL_NEWSPAPER_AD_BUCKET_NAME"),
 				ProfilePic:             os.Getenv("PROFILE_PIC_BUCKET_NAME"),
-				TicketImage:            os.Getenv("TICKET_IMAGE_BUCKET_NAME"),
 				LogoPic:                os.Getenv("LOGO_PIC_BUCKET_NAME"),
 				NewsMedia:              os.Getenv("NEWS_MEDIA_BUCKET_NAME"),
-				BlogMedia:              os.Getenv("BLOG_MEDIA_BUCKET_NAME"),
 			},
 			Region:    os.Getenv("BUCKET_REGION"),
 			AccessKey: os.Getenv("BUCKET_ACCESS_key"),
@@ -179,13 +155,6 @@ func NewEnvironments() *Env {
 			DefaultPage:     getEnvInt("DEFAULT_PAGE", 6),
 			DefaultPageSize: getEnvInt("DEFAULT_PAGE_SIZE", 2),
 		},
-		WebsocketSetting: WebsocketSetting{
-			WriteTimeout:      getEnvDuration("WRITE_TIMEOUT", 10*time.Second),
-			ReadTimeout:       getEnvDuration("READ_TIMEOUT", 60*time.Second),
-			PingPeriod:        getEnvDuration("PING_PERIOD", 54*time.Second),
-			MaxMessageSize:    getEnvInt("MAX_MESSAGE_SIZE", 524288),
-			MessageBufferSize: getEnvInt("MESSAGE_BUFFER_SIZE", 256),
-		},
 		EmailSenderAccount: EmailAccount{
 			EmailFrom:     os.Getenv("EMAIL_FROM"),
 			EmailPassword: os.Getenv("EMAIL_PASSWORD"),
@@ -199,15 +168,6 @@ func NewEnvironments() *Env {
 			Password:     os.Getenv("SUPER_ADMIN_PASSWORD"),
 			Email:        os.Getenv("SUPER_ADMIN_EMAIL"),
 			NationalCode: os.Getenv("SUPER_ADMIN_NATIONAL_CODE"),
-		},
-		RabbitMQ: RabbitMQ{
-			User:          os.Getenv("AMQP_USER"),
-			Password:      os.Getenv("AMQP_PASSWORD"),
-			Host:          os.Getenv("AMQP_HOST"),
-			Port:          os.Getenv("AMQP_PORT"),
-			VHost:         os.Getenv("AMQP_VHOST"),
-			MaxRetryCount: getEnvInt("AMQP_MAX_RETRY", 3),
-			RetryDelay:    getEnvDuration("AMQP_RETRY_DELAY", 5*time.Second),
 		},
 	}
 }

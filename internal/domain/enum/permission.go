@@ -17,58 +17,11 @@ const (
 	UserRemoveRole
 	UserCreateRole
 
-	// Corporation Management
-	CorporationViewAll
-	CorporationApproveDecline
-
-	// Panel Installation Request Management
-	InstallationRequestViewAll
-	InstallationRequestEdit
-	InstallationRequestRemove
-
-	// Ticket Management
-	TicketViewAll
-	TicketRespond
-	TicketClose
-	TicketComment
-
-	// Report Management
-	ReportViewAll
-	ReportRespond
-
-	// Blog Management (Admin)
-	AdminBlogViewAll
-	AdminBlogCreate
-	AdminBlogEdit
-	AdminBlogDelete
-
 	// News Management
 	NewsViewAll
 	NewsCreate
 	NewsEdit
 	NewsDelete
-
-	// Corporation Role Permissions
-	// Panel Management
-	PanelViewAll
-	PanelCreate
-
-	// Maintenance Management
-	MaintenanceViewAll
-	MaintenanceAcceptRequest
-	MaintenanceCreateRecord
-	MaintenanceUpdateRecord
-
-	// Guarantee Management
-	GuaranteeViewAll
-	GuaranteeCreate
-	GuaranteeArchiveUnarchive
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll
-	CorpBlogCreate
-	CorpBlogEdit
-	CorpBlogDelete
 
 	// Profile Management
 	ProfileViewPrivate
@@ -78,15 +31,7 @@ const (
 const (
 	CategoryGeneral PermissionCategory = iota + 1
 	CategoryUser
-	CategoryCorporation
-	CategoryInstallationRequest
-	CategoryTicket
-	CategoryReport
-	CategoryBlog
 	CategoryNews
-	CategoryPanel
-	CategoryMaintenance
-	CategoryGuarantee
 	CategoryProfile
 )
 
@@ -103,57 +48,11 @@ var permissionNames = map[PermissionType]string{
 	UserRemoveRole:            "user.removeRole",
 	UserCreateRole:            "user.createRole",
 
-	// Corporation Management
-	CorporationViewAll:        "corporation.viewAll",
-	CorporationApproveDecline: "corporation.approveDecline",
-
-	// Installation Request Management
-	InstallationRequestViewAll: "installationRequest.viewAll",
-	InstallationRequestEdit:    "installationRequest.edit",
-	InstallationRequestRemove:  "installationRequest.remove",
-
-	// Ticket Management
-	TicketViewAll: "ticket.viewAll",
-	TicketRespond: "ticket.respond",
-	TicketClose:   "ticket.close",
-	TicketComment: "ticket.comment",
-
-	// Report Management
-	ReportViewAll: "report.viewAll",
-	ReportRespond: "report.respond",
-
-	// Blog Management (Admin)
-	AdminBlogViewAll: "adminBlog.viewAll",
-	AdminBlogCreate:  "adminBlog.create",
-	AdminBlogEdit:    "adminBlog.edit",
-	AdminBlogDelete:  "adminBlog.delete",
-
 	// News Management
 	NewsViewAll: "news.viewAll",
 	NewsCreate:  "news.create",
 	NewsEdit:    "news.edit",
 	NewsDelete:  "news.delete",
-
-	// Panel Management
-	PanelViewAll: "panel.viewAll",
-	PanelCreate:  "panel.create",
-
-	// Maintenance Management
-	MaintenanceViewAll:       "maintenance.viewAll",
-	MaintenanceAcceptRequest: "maintenance.acceptRequest",
-	MaintenanceCreateRecord:  "maintenance.createRecord",
-	MaintenanceUpdateRecord:  "maintenance.updateRecord",
-
-	// Guarantee Management
-	GuaranteeViewAll:          "guarantee.viewAll",
-	GuaranteeCreate:           "guarantee.create",
-	GuaranteeArchiveUnarchive: "guarantee.archiveUnarchive",
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll: "corpBlog.viewAll",
-	CorpBlogCreate:  "corpBlog.create",
-	CorpBlogEdit:    "corpBlog.edit",
-	CorpBlogDelete:  "corpBlog.delete",
 
 	// Profile Management
 	ProfileViewPrivate: "profile.viewPrivate",
@@ -173,57 +72,11 @@ var permissionDescriptions = map[PermissionType]string{
 	UserRemoveRole:            "حذف نقش",
 	UserCreateRole:            "ایجاد نقش جدید",
 
-	// Corporation Management
-	CorporationViewAll:        "مشاهده لیست شرکت‌ها",
-	CorporationApproveDecline: "تایید/رد درخواست شرکت",
-
-	// Installation Request Management
-	InstallationRequestViewAll: "مشاهده لیست درخواست‌های نصب",
-	InstallationRequestEdit:    "ویرایش درخواست نصب",
-	InstallationRequestRemove:  "حذف درخواست نصب",
-
-	// Ticket Management
-	TicketViewAll: "مشاهده لیست تیکت‌ها",
-	TicketRespond: "پاسخ به تیکت",
-	TicketClose:   "بستن تیکت",
-	TicketComment: "افزودن نظر به تیکت",
-
-	// Report Management
-	ReportViewAll: "مشاهده لیست گزارش‌ها",
-	ReportRespond: "پاسخ به گزارش",
-
-	// Blog Management (Admin)
-	AdminBlogViewAll: "مشاهده لیست بلاگ‌ها",
-	AdminBlogCreate:  "ایجاد بلاگ جدید",
-	AdminBlogEdit:    "ویرایش بلاگ",
-	AdminBlogDelete:  "حذف بلاگ",
-
 	// News Management
 	NewsViewAll: "مشاهده لیست اخبار",
 	NewsCreate:  "ایجاد خبر جدید",
 	NewsEdit:    "ویرایش خبر",
 	NewsDelete:  "حذف خبر",
-
-	// Panel Management
-	PanelViewAll: "مشاهده لیست پنل‌ها",
-	PanelCreate:  "ایجاد پنل جدید",          "لغو پیشنهاد",
-
-	// Maintenance Management
-	MaintenanceViewAll:       "مشاهده لیست درخواست‌های تعمیر",
-	MaintenanceAcceptRequest: "پذیرش/لغو درخواست تعمیر",
-	MaintenanceCreateRecord:  "ایجاد سابقه تعمیر",
-	MaintenanceUpdateRecord:  "به‌روزرسانی سابقه تعمیر",
-
-	// Guarantee Management
-	GuaranteeViewAll:          "مشاهده لیست ضمانت‌ها",
-	GuaranteeCreate:           "ایجاد ضمانت جدید",
-	GuaranteeArchiveUnarchive: "آرشیو/رفع آرشیو ضمانت",
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll: "مشاهده لیست بلاگ‌ها",
-	CorpBlogCreate:  "ایجاد بلاگ جدید",
-	CorpBlogEdit:    "ویرایش بلاگ",
-	CorpBlogDelete:  "حذف بلاگ",
 
 	// Profile Management
 	ProfileViewPrivate: "مشاهده اطلاعات خصوصی پروفایل",
@@ -243,57 +96,11 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	UserRemoveRole:            CategoryUser,
 	UserCreateRole:            CategoryUser,
 
-	// Corporation Management
-	CorporationViewAll:        CategoryCorporation,
-	CorporationApproveDecline: CategoryCorporation,
-
-	// Installation Request Management
-	InstallationRequestViewAll: CategoryInstallationRequest,
-	InstallationRequestEdit:    CategoryInstallationRequest,
-	InstallationRequestRemove:  CategoryInstallationRequest,
-
-	// Ticket Management
-	TicketViewAll: CategoryTicket,
-	TicketRespond: CategoryTicket,
-	TicketClose:   CategoryTicket,
-	TicketComment: CategoryTicket,
-
-	// Report Management
-	ReportViewAll: CategoryReport,
-	ReportRespond: CategoryReport,
-
-	// Blog Management (Admin)
-	AdminBlogViewAll: CategoryBlog,
-	AdminBlogCreate:  CategoryBlog,
-	AdminBlogEdit:    CategoryBlog,
-	AdminBlogDelete:  CategoryBlog,
-
 	// News Management
 	NewsViewAll: CategoryNews,
 	NewsCreate:  CategoryNews,
 	NewsEdit:    CategoryNews,
 	NewsDelete:  CategoryNews,
-
-	// Panel Management
-	PanelViewAll: CategoryPanel,
-	PanelCreate:  CategoryPanel,
-
-	// Maintenance Management
-	MaintenanceViewAll:       CategoryMaintenance,
-	MaintenanceAcceptRequest: CategoryMaintenance,
-	MaintenanceCreateRecord:  CategoryMaintenance,
-	MaintenanceUpdateRecord:  CategoryMaintenance,
-
-	// Guarantee Management
-	GuaranteeViewAll:          CategoryGuarantee,
-	GuaranteeCreate:           CategoryGuarantee,
-	GuaranteeArchiveUnarchive: CategoryGuarantee,
-
-	// Blog Management (Corporation)
-	CorpBlogViewAll: CategoryBlog,
-	CorpBlogCreate:  CategoryBlog,
-	CorpBlogEdit:    CategoryBlog,
-	CorpBlogDelete:  CategoryBlog,
 
 	// Profile Management
 	ProfileViewPrivate: CategoryProfile,
@@ -327,24 +134,8 @@ func (category PermissionCategory) String() string {
 		return "عمومی"
 	case CategoryUser:
 		return "مدیریت کاربران"
-	case CategoryCorporation:
-		return "مدیریت شرکت‌ها"
-	case CategoryInstallationRequest:
-		return "مدیریت درخواست‌های نصب"
-	case CategoryTicket:
-		return "مدیریت تیکت"
-	case CategoryReport:
-		return "مدیریت گزارشات"
-	case CategoryBlog:
-		return "مدیریت بلاگ"
 	case CategoryNews:
 		return "مدیریت اخبار"
-	case CategoryPanel:
-		return "مدیریت پنل‌ها"
-	case CategoryMaintenance:
-		return "مدیریت تعمیرات"
-	case CategoryGuarantee:
-		return "مدیریت ضمانت‌ها"
 	case CategoryProfile:
 		return "مدیریت پروفایل"
 	}
@@ -359,54 +150,8 @@ func GetAllPermissionTypes() []PermissionType {
 		UserViewAll, UserBanUnban, UserChangeRole, UserViewRoles,
 		UserManageRolePermissions, UserRemoveRole, UserCreateRole,
 
-		// Corporation Management
-		CorporationViewAll, CorporationApproveDecline,
-
-		// Installation Request Management
-		InstallationRequestViewAll, InstallationRequestEdit, InstallationRequestRemove,
-
-		// Ticket Management
-		TicketViewAll, TicketRespond, TicketClose, TicketComment,
-
-		// Report Management
-		ReportViewAll, ReportRespond,
-
-		// Blog Management (Admin)
-		AdminBlogViewAll, AdminBlogCreate, AdminBlogEdit, AdminBlogDelete,
-
 		// News Management
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
-
-		// Panel Management
-		PanelViewAll, PanelCreate,
-
-		// Maintenance Management
-		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
-
-		// Guarantee Management
-		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-
-		// Blog Management (Corporation)
-		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,
-
-		// Profile Management
-		ProfileViewPrivate, ProfileUpdate,
-	}
-}
-
-func GetCorporationPermissionTypes() []PermissionType {
-	return []PermissionType{
-		// Panel Management
-		PanelViewAll, PanelCreate,
-
-		// Maintenance Management
-		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
-
-		// Guarantee Management
-		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
-
-		// Blog Management (Corporation)
-		CorpBlogViewAll, CorpBlogCreate, CorpBlogEdit, CorpBlogDelete,
 
 		// Profile Management
 		ProfileViewPrivate, ProfileUpdate,

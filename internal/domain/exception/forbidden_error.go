@@ -18,7 +18,6 @@ type ForbiddenType string
 
 const (
 	ForbiddenTypeBannedUser            ForbiddenType = "banned_user"
-	ForbiddenTypeUnapprovedCorporation ForbiddenType = "unapproved_corporation"
 )
 
 type ForbiddenError struct {
@@ -38,12 +37,5 @@ func NewBannedUserForbiddenError() ForbiddenError {
 	return ForbiddenError{
 		Type:    ForbiddenTypeBannedUser,
 		Message: "Your account is banned and cannot perform this operation.",
-	}
-}
-
-func NewUnapprovedCorporationForbiddenError() ForbiddenError {
-	return ForbiddenError{
-		Type:    ForbiddenTypeUnapprovedCorporation,
-		Message: "Vendor approval is required to access this resource.",
 	}
 }

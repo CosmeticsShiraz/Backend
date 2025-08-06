@@ -5,7 +5,6 @@ import (
 
 	"github.com/CosmeticsShiraz/Backend/bootstrap"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/entity"
-	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/routes"
 	"github.com/CosmeticsShiraz/Backend/wire"
 	"github.com/gin-gonic/gin"
@@ -17,10 +16,7 @@ func main() {
 
 	config := bootstrap.Run()
 
-	hub := websocket.NewHub()
-	go hub.Run()
-
-	app, err := wire.InitializeApplication(config, hub)
+	app, err := wire.InitializeApplication(config)
 	if err != nil {
 		panic(err)
 	}
@@ -28,40 +24,17 @@ func main() {
 	app.Database.DB.GetDB().AutoMigrate(
 		&entity.Address{},
 		&entity.City{},
-		&entity.ChatMessage{},
-		&entity.ChatRoom{},
-		&entity.NotificationSetting{},
-		&entity.NotificationType{},
-		&entity.Notification{},
 		&entity.Permission{},
 		&entity.Province{},
 		&entity.Role{},
 		&entity.User{},
-		&entity.PaymentTerm{},
-		&entity.Report{},
 		&entity.Media{},
 		&entity.News{},
-		&entity.Post{},
 		&entity.Like{},
 	)
 
 	app.Seeds.AddressSeeder.SeedProvincesAndCities()
-	app.Seeds.NotificationTypeSeeder.SeedNotificationTypes()
 	app.Seeds.RoleSeeder.SeedRoles()
-	app.Seeds.ContactType.SeedContactTypes()
-
-	if err := app.Consumers.Register.Start(); err != nil {
-		panic(err)
-	}
-	if err := app.Consumers.Push.Start(); err != nil {
-		panic(err)
-	}
-	if err := app.Consumers.Email.Start(); err != nil {
-		panic(err)
-	}
-	if err := app.Consumers.Notification.Start(); err != nil {
-		panic(err)
-	}
 
 	routes.Run(ginEngine, app)
 

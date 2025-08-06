@@ -9,7 +9,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/application/usecase"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/communication"
 	domainLogger "github.com/CosmeticsShiraz/Backend/internal/domain/logger"
-	"github.com/CosmeticsShiraz/Backend/internal/domain/message"
 	domainMetrics "github.com/CosmeticsShiraz/Backend/internal/domain/metrics"
 	domainPostgres "github.com/CosmeticsShiraz/Backend/internal/domain/repository/postgres"
 	domainRedis "github.com/CosmeticsShiraz/Backend/internal/domain/repository/redis"
@@ -21,25 +20,12 @@ import (
 	infraLocalization "github.com/CosmeticsShiraz/Backend/internal/infrastructure/localization"
 	infraLogger "github.com/CosmeticsShiraz/Backend/internal/infrastructure/logger"
 	infraMetrics "github.com/CosmeticsShiraz/Backend/internal/infrastructure/metrics"
-	infraRabbitMQ "github.com/CosmeticsShiraz/Backend/internal/infrastructure/rabbitmq"
-	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/rabbitmq/consumer"
 	infraPostgres "github.com/CosmeticsShiraz/Backend/internal/infrastructure/repository/postgres"
 	infraRedis "github.com/CosmeticsShiraz/Backend/internal/infrastructure/repository/redis"
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/seed"
 	infraStorage "github.com/CosmeticsShiraz/Backend/internal/infrastructure/storage"
-	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/blog"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/chat"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/corporation"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/guarantee"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/installation"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/maintenance"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/notification"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/report"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/ticket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/user"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/middleware"
 	"github.com/google/wire"
@@ -55,73 +41,31 @@ var DatabaseProviderSet = wire.NewSet(
 
 var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewUserRepository,
-	infraPostgres.NewInstallationRepository,
 	infraPostgres.NewAddressRepository,
 	infraRedis.NewUserCacheRepository,
-	infraPostgres.NewCorporationRepository,
-	infraPostgres.NewChatRepository,
-	infraPostgres.NewNotificationRepository,
-	infraPostgres.NewMaintenanceRepository,
-	infraPostgres.NewTicketRepository,
-	infraPostgres.NewReportRepository,
-	infraPostgres.NewGuaranteeRepository,
-	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
-	infraPostgres.NewBlogRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
-	wire.Bind(new(domainPostgres.InstallationRepository), new(*infraPostgres.InstallationRepository)),
 	wire.Bind(new(domainPostgres.AddressRepository), new(*infraPostgres.AddressRepository)),
 	wire.Bind(new(domainRedis.UserCacheRepository), new(*infraRedis.UserCacheRepository)),
-	wire.Bind(new(domainPostgres.CorporationRepository), new(*infraPostgres.CorporationRepository)),
-	wire.Bind(new(domainPostgres.ChatRepository), new(*infraPostgres.ChatRepository)),
-	wire.Bind(new(domainPostgres.NotificationRepository), new(*infraPostgres.NotificationRepository)),
-	wire.Bind(new(domainPostgres.MaintenanceRepository), new(*infraPostgres.MaintenanceRepository)),
-	wire.Bind(new(domainPostgres.TicketRepository), new(*infraPostgres.TicketRepository)),
-	wire.Bind(new(domainPostgres.ReportRepository), new(*infraPostgres.ReportRepository)),
-	wire.Bind(new(domainPostgres.GuaranteeRepository), new(*infraPostgres.GuaranteeRepository)),
-	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
 	wire.Bind(new(domainPostgres.NewsRepository), new(*infraPostgres.NewsRepository)),
-	wire.Bind(new(domainPostgres.BlogRepository), new(*infraPostgres.BlogRepository)),
 )
 
 var ServiceProviderSet = wire.NewSet(
 	wire.Struct(new(service.UserServiceDeps), "*"),
-	wire.Struct(new(service.NotificationServiceDeps), "*"),
-	wire.Struct(new(service.InstallationServiceDeps), "*"),
 	service.NewUserService,
 	service.NewOTPService,
 	sms.NewSMSService,
 	email.NewEmailService,
 	service.NewJWTService,
-	service.NewInstallationService,
 	service.NewAddressService,
-	service.NewCorporationService,
-	service.NewChatService,
-	service.NewNotificationService,
-	service.NewMaintenanceService,
-	service.NewTicketService,
-	service.NewReportService,
-	service.NewGuaranteeService,
-	service.NewPaymentService,
 	service.NewNewsService,
-	service.NewBlogService,
 	wire.Bind(new(usecase.UserService), new(*service.UserService)),
 	wire.Bind(new(usecase.OTPService), new(*service.OTPService)),
 	wire.Bind(new(communication.SMSService), new(*sms.SMSService)),
 	wire.Bind(new(communication.EmailService), new(*email.EmailService)),
 	wire.Bind(new(usecase.JWTService), new(*service.JWTService)),
-	wire.Bind(new(usecase.InstallationService), new(*service.InstallationService)),
 	wire.Bind(new(usecase.AddressService), new(*service.AddressService)),
-	wire.Bind(new(usecase.CorporationService), new(*service.CorporationService)),
-	wire.Bind(new(usecase.ChatService), new(*service.ChatService)),
-	wire.Bind(new(usecase.NotificationService), new(*service.NotificationService)),
-	wire.Bind(new(usecase.MaintenanceService), new(*service.MaintenanceService)),
-	wire.Bind(new(usecase.TicketService), new(*service.TicketService)),
-	wire.Bind(new(usecase.ReportService), new(*service.ReportService)),
-	wire.Bind(new(usecase.GuaranteeService), new(*service.GuaranteeService)),
-	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
 	wire.Bind(new(usecase.NewsService), new(*service.NewsService)),
-	wire.Bind(new(usecase.BlogService), new(*service.BlogService)),
 )
 
 var AdapterProviderSet = wire.NewSet(
@@ -130,57 +74,27 @@ var AdapterProviderSet = wire.NewSet(
 	infraJWT.NewJWTKeyManager,
 	infraMetrics.NewPrometheusMetrics,
 	infraStorage.NewS3Storage,
-	infraRabbitMQ.NewRabbitMQ,
 	wire.Bind(new(domainLogger.Logger), new(*infraLogger.Logger)),
 	wire.Bind(new(domainMetrics.MetricsClient), new(*infraMetrics.PrometheusMetrics)),
 	wire.Bind(new(s3.S3Storage), new(*infraStorage.S3Storage)),
-	wire.Bind(new(message.Broker), new(*infraRabbitMQ.RabbitMQ)),
 )
 
 var GeneralControllerProviderSet = wire.NewSet(
 	user.NewGeneralUserController,
 	address.NewGeneralAddressController,
-	corporation.NewGeneralCorporationController,
-	notification.NewGeneralNotificationController,
-	installation.NewGeneralInstallationController,
 	news.NewGeneralNewsController,
-	blog.NewGeneralBlogController,
-	payment.NewGeneralPaymentController,
-	ticket.NewGeneralTicketController,
 	wire.Struct(new(GeneralControllers), "*"),
 )
 
 var CustomerControllerProviderSet = wire.NewSet(
 	user.NewCustomerUserController,
-	installation.NewCustomerInstallationController,
 	address.NewCustomerAddressController,
-	corporation.NewCustomerCorporationController,
-	chat.NewCustomerChatController,
-	notification.NewCustomerNotificationController,
-	maintenance.NewCustomerMaintenanceController,
-	ticket.NewCustomerTicketController,
-	report.NewCustomerReportController,
-	blog.NewCustomerBlogController,
 	wire.Struct(new(CustomerControllers), "*"),
 )
 
-var CorporationControllerProviderSet = wire.NewSet(
-	corporation.NewCorporationCorporationController,
-	installation.NewCorporationInstallationController,
-	chat.NewCorporationChatController,
-	maintenance.NewCorporationMaintenanceController,
-	guarantee.NewCorporationGuaranteeController,
-	blog.NewCorporationBlogController,
-	wire.Struct(new(CorporationControllers), "*"),
-)
-
 var AdminControllerProviderSet = wire.NewSet(
-	ticket.NewAdminTicketController,
 	user.NewAdminUserController,
-	report.NewAdminReportController,
 	news.NewAdminNewsController,
-	corporation.NewAdminCorporationController,
-	installation.NewAdminInstallationController,
 	wire.Struct(new(AdminControllers), "*"),
 )
 
@@ -196,24 +110,13 @@ var MiddlewareProviderSet = wire.NewSet(
 	middleware.NewRateLimit,
 	middleware.NewLoggerMiddleware,
 	middleware.NewPrometheusMiddleware,
-	middleware.NewWebsocketMiddleware,
 	wire.Struct(new(Middlewares), "*"),
 )
 
 var SeederProviderSet = wire.NewSet(
 	seed.NewAddressSeeder,
-	seed.NewNotificationTypeSeeder,
 	seed.NewRoleSeeder,
-	seed.NewContactTypeSeeder,
 	wire.Struct(new(Seeds), "*"),
-)
-
-var ConsumerProviderSet = wire.NewSet(
-	consumer.NewRegisterConsumer,
-	consumer.NewPushConsumer,
-	consumer.NewEmailConsumer,
-	consumer.NewSendNotificationConsumer,
-	wire.Struct(new(Consumers), "*"),
 )
 
 func ProvideConstants(container *bootstrap.Config) *bootstrap.Constants {
@@ -268,24 +171,12 @@ func ProvideStorageConfig(container *bootstrap.Config) *bootstrap.S3 {
 	return &container.Env.Storage
 }
 
-func ProvideWebsocketSetting(container *bootstrap.Config) *bootstrap.WebsocketSetting {
-	return &container.Env.WebsocketSetting
-}
-
 func ProvideEmailSenderAccount(container *bootstrap.Config) *bootstrap.EmailAccount {
 	return &container.Env.EmailSenderAccount
 }
 
 func ProvideSuperAdminCredential(container *bootstrap.Config) *bootstrap.AdminCredentials {
 	return &container.Env.SuperAdmin
-}
-
-func ProvideRabbitMQConfig(container *bootstrap.Config) *bootstrap.RabbitMQ {
-	return &container.Env.RabbitMQ
-}
-
-func ProvideRabbitMQConstants(container *bootstrap.Config) *bootstrap.RabbitMQConstants {
-	return &container.Constants.RabbitMQ
 }
 
 var ProviderSet = wire.NewSet(
@@ -295,12 +186,10 @@ var ProviderSet = wire.NewSet(
 	AdapterProviderSet,
 	GeneralControllerProviderSet,
 	CustomerControllerProviderSet,
-	CorporationControllerProviderSet,
 	AdminControllerProviderSet,
 	ControllersProviderSet,
 	MiddlewareProviderSet,
 	SeederProviderSet,
-	ConsumerProviderSet,
 	ProvideConstants,
 	ProvideLoggerConfig,
 	ProvideRateLimitConfig,
@@ -314,11 +203,8 @@ var ProviderSet = wire.NewSet(
 	ProvideMetrics,
 	ProvidePaginationConfig,
 	ProvideStorageConfig,
-	ProvideWebsocketSetting,
 	ProvideEmailSenderAccount,
 	ProvideSuperAdminCredential,
-	ProvideRabbitMQConfig,
-	ProvideRabbitMQConstants,
 )
 
 type Database struct {
@@ -329,50 +215,22 @@ type Database struct {
 type GeneralControllers struct {
 	UserController         *user.GeneralUserController
 	AddressController      *address.GeneralAddressController
-	CorporationController  *corporation.GeneralCorporationController
-	NotificationController *notification.GeneralNotificationController
-	InstallationController *installation.GeneralInstallationController
 	NewsController         *news.GeneralNewsController
-	BlogController         *blog.GeneralBlogController
-	PaymentController      *payment.GeneralPaymentController
-	TicketController       *ticket.GeneralTicketController
 }
 
 type CustomerControllers struct {
 	UserController         *user.CustomerUserController
-	InstallationController *installation.CustomerInstallationController
 	AddressController      *address.CustomerAddressController
-	CorporationController  *corporation.CustomerCorporationController
-	ChatController         *chat.CustomerChatController
-	NotificationController *notification.CustomerNotificationController
-	MaintenanceController  *maintenance.CustomerMaintenanceController
-	TicketController       *ticket.CustomerTicketController
-	ReportController       *report.CustomerReportController
-	BlogController         *blog.CustomerBlogController
-}
-
-type CorporationControllers struct {
-	CorporationController  *corporation.CorporationCorporationController
-	InstallationController *installation.CorporationInstallationController
-	ChatController         *chat.CorporationChatController
-	MaintenanceController  *maintenance.CorporationMaintenanceController
-	GuaranteeController    *guarantee.CorporationGuaranteeController
-	BlogController         *blog.CorporationBlogController
 }
 
 type AdminControllers struct {
-	TicketController       *ticket.AdminTicketController
 	UserController         *user.AdminUserController
-	ReportController       *report.AdminReportController
 	NewsController         *news.AdminNewsController
-	CorporationController  *corporation.AdminCorporationController
-	InstallationController *installation.AdminInstallationController
 }
 
 type Controllers struct {
 	General     *GeneralControllers
 	Customer    *CustomerControllers
-	Corporation *CorporationControllers
 	Admin       *AdminControllers
 }
 
@@ -384,21 +242,11 @@ type Middlewares struct {
 	RateLimit           *middleware.RateLimitMiddleware
 	Logger              *middleware.LoggerMiddleware
 	Prometheus          *middleware.PrometheusMiddleware
-	WebsocketMiddleware *middleware.WebsocketMiddleware
 }
 
 type Seeds struct {
 	AddressSeeder          *seed.AddressSeeder
-	NotificationTypeSeeder *seed.NotificationTypeSeeder
 	RoleSeeder             *seed.RoleSeeder
-	ContactType            *seed.ContactTypeSeeder
-}
-
-type Consumers struct {
-	Register     *consumer.RegisterConsumer
-	Push         *consumer.PushConsumer
-	Email        *consumer.EmailConsumer
-	Notification *consumer.SendNotificationConsumer
 }
 
 type Application struct {
@@ -406,7 +254,6 @@ type Application struct {
 	Controllers *Controllers
 	Middlewares *Middlewares
 	Seeds       *Seeds
-	Consumers   *Consumers
 }
 
 func NewApplication(
@@ -414,18 +261,16 @@ func NewApplication(
 	controllers *Controllers,
 	middlewares *Middlewares,
 	seeds *Seeds,
-	consumers *Consumers,
 ) *Application {
 	return &Application{
 		Database:    database,
 		Controllers: controllers,
 		Middlewares: middlewares,
 		Seeds:       seeds,
-		Consumers:   consumers,
 	}
 }
 
-func InitializeApplication(container *bootstrap.Config, hub *websocket.Hub) (*Application, error) {
+func InitializeApplication(container *bootstrap.Config) (*Application, error) {
 	wire.Build(
 		ProviderSet,
 		NewApplication,
