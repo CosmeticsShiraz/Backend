@@ -30,7 +30,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/chat"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/guarantee"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/notification"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
@@ -55,7 +54,6 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewChatRepository,
 	infraPostgres.NewNotificationRepository,
 	infraPostgres.NewReportRepository,
-	infraPostgres.NewGuaranteeRepository,
 	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
@@ -64,7 +62,6 @@ var RepositoryProviderSet = wire.NewSet(
 	wire.Bind(new(domainPostgres.ChatRepository), new(*infraPostgres.ChatRepository)),
 	wire.Bind(new(domainPostgres.NotificationRepository), new(*infraPostgres.NotificationRepository)),
 	wire.Bind(new(domainPostgres.ReportRepository), new(*infraPostgres.ReportRepository)),
-	wire.Bind(new(domainPostgres.GuaranteeRepository), new(*infraPostgres.GuaranteeRepository)),
 	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
 	wire.Bind(new(domainPostgres.NewsRepository), new(*infraPostgres.NewsRepository)),
 )
@@ -82,7 +79,6 @@ var ServiceProviderSet = wire.NewSet(
 	service.NewChatService,
 	service.NewNotificationService,
 	service.NewReportService,
-	service.NewGuaranteeService,
 	service.NewPaymentService,
 	service.NewNewsService,
 	wire.Bind(new(usecase.UserService), new(*service.UserService)),
@@ -94,7 +90,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(usecase.ChatService), new(*service.ChatService)),
 	wire.Bind(new(usecase.NotificationService), new(*service.NotificationService)),
 	wire.Bind(new(usecase.ReportService), new(*service.ReportService)),
-	wire.Bind(new(usecase.GuaranteeService), new(*service.GuaranteeService)),
 	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
 	wire.Bind(new(usecase.NewsService), new(*service.NewsService)),
 )

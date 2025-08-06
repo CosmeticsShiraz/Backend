@@ -27,11 +27,6 @@ const (
 	NewsEdit
 	NewsDelete
 
-	// Guarantee Management
-	GuaranteeViewAll
-	GuaranteeCreate
-	GuaranteeArchiveUnarchive
-
 	// Profile Management
 	ProfileViewPrivate
 	ProfileUpdate
@@ -42,7 +37,6 @@ const (
 	CategoryUser
 	CategoryReport
 	CategoryNews
-	CategoryGuarantee
 	CategoryProfile
 )
 
@@ -68,11 +62,6 @@ var permissionNames = map[PermissionType]string{
 	NewsCreate:  "news.create",
 	NewsEdit:    "news.edit",
 	NewsDelete:  "news.delete",
-
-	// Guarantee Management
-	GuaranteeViewAll:          "guarantee.viewAll",
-	GuaranteeCreate:           "guarantee.create",
-	GuaranteeArchiveUnarchive: "guarantee.archiveUnarchive",
 
 	// Profile Management
 	ProfileViewPrivate: "profile.viewPrivate",
@@ -102,11 +91,6 @@ var permissionDescriptions = map[PermissionType]string{
 	NewsEdit:    "ویرایش خبر",
 	NewsDelete:  "حذف خبر",
 
-	// Guarantee Management
-	GuaranteeViewAll:          "مشاهده لیست ضمانت‌ها",
-	GuaranteeCreate:           "ایجاد ضمانت جدید",
-	GuaranteeArchiveUnarchive: "آرشیو/رفع آرشیو ضمانت",
-
 	// Profile Management
 	ProfileViewPrivate: "مشاهده اطلاعات خصوصی پروفایل",
 	ProfileUpdate:      "به‌روزرسانی پروفایل",
@@ -134,11 +118,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	NewsCreate:  CategoryNews,
 	NewsEdit:    CategoryNews,
 	NewsDelete:  CategoryNews,
-
-	// Guarantee Management
-	GuaranteeViewAll:          CategoryGuarantee,
-	GuaranteeCreate:           CategoryGuarantee,
-	GuaranteeArchiveUnarchive: CategoryGuarantee,
 
 	// Profile Management
 	ProfileViewPrivate: CategoryProfile,
@@ -176,8 +155,6 @@ func (category PermissionCategory) String() string {
 		return "مدیریت گزارشات"
 	case CategoryNews:
 		return "مدیریت اخبار"
-	case CategoryGuarantee:
-		return "مدیریت ضمانت‌ها"
 	case CategoryProfile:
 		return "مدیریت پروفایل"
 	}
@@ -197,9 +174,6 @@ func GetAllPermissionTypes() []PermissionType {
 
 		// News Management
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
-
-		// Guarantee Management
-		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
 
 		// Profile Management
 		ProfileViewPrivate, ProfileUpdate,

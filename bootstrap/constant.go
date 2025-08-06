@@ -62,8 +62,6 @@ type ErrorField struct {
 	Permission          string
 	Report              string
 	PaymentTerm         string
-	Guarantee           string
-	GuaranteeViolation  string
 	News                string
 	Media               string
 	Post                string
@@ -204,8 +202,6 @@ func NewConstants() *Constants {
 			Report:              "report",
 			NotificationSetting: "notificationSetting",
 			PaymentTerm:         "paymentTerm",
-			Guarantee:           "guarantee",
-			GuaranteeViolation:  "guaranteeViolation",
 			News:                "news",
 			Media:               "media",
 			Post:                "post",
