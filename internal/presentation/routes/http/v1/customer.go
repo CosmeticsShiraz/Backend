@@ -15,20 +15,6 @@ func SetupCustomerRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		profile.PUT("", app.Controllers.Customer.UserController.UpdateProfile)
 	}
 
-	maintenances := routerGroup.Group("/maintenance/request")
-	{
-		maintenances.GET("/level", app.Controllers.Customer.MaintenanceController.GetMaintenanceUrgencyLevels)
-		maintenances.POST("", app.Controllers.Customer.MaintenanceController.CreateMaintenanceRequest)
-		maintenances.GET("", app.Controllers.Customer.MaintenanceController.GetAllMaintenanceRequests)
-		requestsSubGroup := maintenances.Group("/:requestID")
-		{
-			requestsSubGroup.GET("", app.Controllers.Customer.MaintenanceController.GetMaintenanceRequest)
-			requestsSubGroup.PUT("", app.Controllers.Customer.MaintenanceController.UpdateMaintenanceRequest)
-			requestsSubGroup.PUT("/cancel", app.Controllers.Customer.MaintenanceController.CancelMaintenanceRequest)
-			requestsSubGroup.PUT("record/approve", app.Controllers.Customer.MaintenanceController.ApproveMaintenanceRecord)
-		}
-	}
-
 	addresses := routerGroup.Group("/address")
 	{
 		addresses.POST("", app.Controllers.Customer.AddressController.CreateUserAddress)
@@ -49,17 +35,5 @@ func SetupCustomerRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		notification.GET("", app.Controllers.Customer.NotificationController.GetUserNotifications)
 		notification.GET("/setting", app.Controllers.Customer.NotificationController.GetUserNotificationSettings)
 		notification.PUT("/setting/:settingID", app.Controllers.Customer.NotificationController.UpdateSettings)
-	}
-
-	reports := routerGroup.Group("/report")
-	{
-		maintenanceReports := reports.Group("/maintenance")
-		{
-			maintenanceReports.POST("/:recordID", app.Controllers.Customer.ReportController.CreateMaintenanceReport)
-		}
-		panelReports := reports.Group("/panel")
-		{
-			panelReports.POST("/:panelID", app.Controllers.Customer.ReportController.CreatePanelReport)
-		}
 	}
 }

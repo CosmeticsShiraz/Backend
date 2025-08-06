@@ -27,12 +27,6 @@ const (
 	NewsEdit
 	NewsDelete
 
-	// Maintenance Management
-	MaintenanceViewAll
-	MaintenanceAcceptRequest
-	MaintenanceCreateRecord
-	MaintenanceUpdateRecord
-
 	// Guarantee Management
 	GuaranteeViewAll
 	GuaranteeCreate
@@ -49,7 +43,6 @@ const (
 	CategoryReport
 	CategoryNews
 	CategoryPanel
-	CategoryMaintenance
 	CategoryGuarantee
 	CategoryProfile
 )
@@ -80,12 +73,6 @@ var permissionNames = map[PermissionType]string{
 	// Panel Management
 	PanelViewAll: "panel.viewAll",
 	PanelCreate:  "panel.create",
-
-	// Maintenance Management
-	MaintenanceViewAll:       "maintenance.viewAll",
-	MaintenanceAcceptRequest: "maintenance.acceptRequest",
-	MaintenanceCreateRecord:  "maintenance.createRecord",
-	MaintenanceUpdateRecord:  "maintenance.updateRecord",
 
 	// Guarantee Management
 	GuaranteeViewAll:          "guarantee.viewAll",
@@ -124,12 +111,6 @@ var permissionDescriptions = map[PermissionType]string{
 	PanelViewAll: "مشاهده لیست پنل‌ها",
 	PanelCreate:  "ایجاد پنل جدید",          "لغو پیشنهاد",
 
-	// Maintenance Management
-	MaintenanceViewAll:       "مشاهده لیست درخواست‌های تعمیر",
-	MaintenanceAcceptRequest: "پذیرش/لغو درخواست تعمیر",
-	MaintenanceCreateRecord:  "ایجاد سابقه تعمیر",
-	MaintenanceUpdateRecord:  "به‌روزرسانی سابقه تعمیر",
-
 	// Guarantee Management
 	GuaranteeViewAll:          "مشاهده لیست ضمانت‌ها",
 	GuaranteeCreate:           "ایجاد ضمانت جدید",
@@ -166,12 +147,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	// Panel Management
 	PanelViewAll: CategoryPanel,
 	PanelCreate:  CategoryPanel,
-
-	// Maintenance Management
-	MaintenanceViewAll:       CategoryMaintenance,
-	MaintenanceAcceptRequest: CategoryMaintenance,
-	MaintenanceCreateRecord:  CategoryMaintenance,
-	MaintenanceUpdateRecord:  CategoryMaintenance,
 
 	// Guarantee Management
 	GuaranteeViewAll:          CategoryGuarantee,
@@ -216,8 +191,6 @@ func (category PermissionCategory) String() string {
 		return "مدیریت اخبار"
 	case CategoryPanel:
 		return "مدیریت پنل‌ها"
-	case CategoryMaintenance:
-		return "مدیریت تعمیرات"
 	case CategoryGuarantee:
 		return "مدیریت ضمانت‌ها"
 	case CategoryProfile:
@@ -242,9 +215,6 @@ func GetAllPermissionTypes() []PermissionType {
 
 		// Panel Management
 		PanelViewAll, PanelCreate,
-
-		// Maintenance Management
-		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
 
 		// Guarantee Management
 		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,

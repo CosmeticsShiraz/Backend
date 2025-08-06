@@ -45,13 +45,6 @@ func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		userManagement.PUT("/:userID/unban", app.Controllers.Admin.UserController.UnbanUser)
 	}
 
-	report := routerGroup.Group("/report")
-	{
-		report.GET("/maintenance", app.Controllers.Admin.ReportController.GetMaintenanceReports)
-		report.GET("/panel", app.Controllers.Admin.ReportController.GetPanelReports)
-		report.POST("/resolve/:reportID", app.Controllers.Admin.ReportController.ResolveReport)
-	}
-
 	news := routerGroup.Group("/news")
 	{
 		news.POST("/draft", app.Controllers.Admin.NewsController.CreateDraftNews)

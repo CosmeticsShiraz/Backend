@@ -80,28 +80,6 @@ func (notificationService *NotificationService) CreateAndSendNotification(typeNa
 	return nil
 }
 
-func (notificationService *NotificationService) enrichMaintenanceReportData(rawData []byte) (map[string]interface{}, error) {
-	var reportData reportdto.ReportNotificationData
-	var result map[string]interface{}
-	if err := json.Unmarshal(rawData, &reportData); err != nil {
-		return nil, err
-	}
-	report, err := notificationService.reportService.GetMaintenanceReport(reportData.ReportID)
-	if err != nil {
-		return nil, err
-	}
-
-	reportBytes, err := json.Marshal(report)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(reportBytes, &result); err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (notificationService *NotificationService) enrichPanelReportData(rawData []byte) (map[string]interface{}, error) {
 	var reportData reportdto.ReportNotificationData
 	var result map[string]interface{}
@@ -128,18 +106,8 @@ func (notificationService *NotificationService) dataCatcher(notificationType enu
 	var data map[string]interface{}
 	var err error
 
-	switch notificationType {
-	case enum.MaintenanceReportCreated:
-		data, err = notificationService.enrichMaintenanceReportData(notificationData)
-		if err != nil {
-			return nil, err
-		}
-	case enum.PanelReportCreated:
-		data, err = notificationService.enrichPanelReportData(notificationData)
-		if err != nil {
-			return nil, err
-		}
-	}
+	// switch notificationType {
+	// }
 	return data, nil
 }
 
