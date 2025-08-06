@@ -59,7 +59,6 @@ type ErrorField struct {
 	NotificationType    string
 	Notification        string
 	NotificationSetting string
-	Panel               string
 	Role                string
 	Permission          string
 	Report              string
@@ -133,11 +132,6 @@ type Options struct {
 
 type AddressOwners struct {
 	User                string
-	Panel               string
-}
-
-type ReportObjectTypes struct {
-	Panel       string
 }
 
 type ReportOwners struct {
@@ -208,7 +202,6 @@ func NewConstants() *Constants {
 			Room:                "room",
 			NotificationType:    "notificationType",
 			Notification:        "notification",
-			Panel:               "panel",
 			Role:                "role",
 			Permission:          "permission",
 			Report:              "report",
@@ -278,7 +271,6 @@ func NewConstants() *Constants {
 		},
 		AddressOwners: AddressOwners{
 			User:                "users",
-			Panel:               "panels",
 		},
 
 		ReportOwners: ReportOwners{

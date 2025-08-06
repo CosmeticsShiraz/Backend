@@ -42,7 +42,6 @@ const (
 	CategoryUser
 	CategoryReport
 	CategoryNews
-	CategoryPanel
 	CategoryGuarantee
 	CategoryProfile
 )
@@ -69,10 +68,6 @@ var permissionNames = map[PermissionType]string{
 	NewsCreate:  "news.create",
 	NewsEdit:    "news.edit",
 	NewsDelete:  "news.delete",
-
-	// Panel Management
-	PanelViewAll: "panel.viewAll",
-	PanelCreate:  "panel.create",
 
 	// Guarantee Management
 	GuaranteeViewAll:          "guarantee.viewAll",
@@ -107,10 +102,6 @@ var permissionDescriptions = map[PermissionType]string{
 	NewsEdit:    "ویرایش خبر",
 	NewsDelete:  "حذف خبر",
 
-	// Panel Management
-	PanelViewAll: "مشاهده لیست پنل‌ها",
-	PanelCreate:  "ایجاد پنل جدید",          "لغو پیشنهاد",
-
 	// Guarantee Management
 	GuaranteeViewAll:          "مشاهده لیست ضمانت‌ها",
 	GuaranteeCreate:           "ایجاد ضمانت جدید",
@@ -143,10 +134,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	NewsCreate:  CategoryNews,
 	NewsEdit:    CategoryNews,
 	NewsDelete:  CategoryNews,
-
-	// Panel Management
-	PanelViewAll: CategoryPanel,
-	PanelCreate:  CategoryPanel,
 
 	// Guarantee Management
 	GuaranteeViewAll:          CategoryGuarantee,
@@ -189,8 +176,6 @@ func (category PermissionCategory) String() string {
 		return "مدیریت گزارشات"
 	case CategoryNews:
 		return "مدیریت اخبار"
-	case CategoryPanel:
-		return "مدیریت پنل‌ها"
 	case CategoryGuarantee:
 		return "مدیریت ضمانت‌ها"
 	case CategoryProfile:
@@ -212,9 +197,6 @@ func GetAllPermissionTypes() []PermissionType {
 
 		// News Management
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
-
-		// Panel Management
-		PanelViewAll, PanelCreate,
 
 		// Guarantee Management
 		GuaranteeViewAll, GuaranteeCreate, GuaranteeArchiveUnarchive,
