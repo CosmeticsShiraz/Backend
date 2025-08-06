@@ -1,0 +1,102 @@
+package httpv1
+
+import (
+	"github.com/CosmeticsShiraz/Backend/wire"
+	"github.com/gin-gonic/gin"
+)
+
+func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
+	const status string = "/status"
+
+	ticket := routerGroup.Group("/ticket")
+	{
+		ticket.GET("", app.Controllers.Admin.TicketController.GetTickets)
+		ticketsSubGroup := ticket.Group("/:ticketID")
+		{
+			ticketsSubGroup.GET("/comments", app.Controllers.Admin.TicketController.GetComments)
+			ticketsSubGroup.POST("/comments", app.Controllers.Admin.TicketController.CreateComment)
+			ticketsSubGroup.POST("/resolve", app.Controllers.Admin.TicketController.ResolveTicket)
+		}
+	}
+
+	accessManagement := routerGroup.Group("")
+	// accessManagement.Use(app.Middlewares.Auth.RequirePermission([]enums.PermissionType{enums.ManageUsers, enums.ManageRoles}))
+	{
+		permissions := accessManagement.Group("/permissions")
+		{
+			permissions.GET("", app.Controllers.Admin.UserController.GetPermissionsList)
+			permissions.GET("/:permissionID/roles", app.Controllers.Admin.UserController.GetPermissionRoles)
+		}
+
+		roles := accessManagement.Group("/roles")
+		{
+			roles.GET("", app.Controllers.Admin.UserController.GetRolesList)
+			roles.POST("", app.Controllers.Admin.UserController.CreateRole)
+
+			rolesSubGroup := roles.Group("/:roleID")
+			{
+				rolesSubGroup.GET("", app.Controllers.Admin.UserController.GetRoleDetails)
+				rolesSubGroup.GET("/owners", app.Controllers.Admin.UserController.GetRoleOwners)
+				rolesSubGroup.PUT("", app.Controllers.Admin.UserController.UpdateRole)
+				rolesSubGroup.DELETE("", app.Controllers.Admin.UserController.DeleteRole)
+			}
+		}
+
+		userRoles := accessManagement.Group("/users/:userID/roles")
+		{
+			userRoles.GET("", app.Controllers.Admin.UserController.GetUserRoles)
+			userRoles.PUT("", app.Controllers.Admin.UserController.UpdateUserRoles)
+		}
+	}
+
+	userManagement := routerGroup.Group("/users")
+	{
+		userManagement.GET("", app.Controllers.Admin.UserController.GetUsers)
+		userManagement.PUT("/:userID/ban", app.Controllers.Admin.UserController.BanUser)
+		userManagement.PUT("/:userID/unban", app.Controllers.Admin.UserController.UnbanUser)
+	}
+
+	corporationManagement := routerGroup.Group("/corporation")
+	// put some role here
+	{
+		corporationManagement.GET("", app.Controllers.Admin.CorporationController.GetCorporations)
+		corporationManagement.GET(status, app.Controllers.Admin.CorporationController.GetCorporationStatus)
+		corporationSubGRoup := corporationManagement.Group("/:corporationID")
+		{
+			corporationSubGRoup.GET("", app.Controllers.Admin.CorporationController.GetCorporation)
+			corporationSubGRoup.POST("/approve", app.Controllers.Admin.CorporationController.ApproveCorporationRequest)
+			corporationSubGRoup.POST("/reject", app.Controllers.Admin.CorporationController.RejectCorporationRequest)
+			reviewSubGroup := corporationSubGRoup.Group("/review")
+			{
+				reviewSubGroup.GET("/action", app.Controllers.Admin.CorporationController.GetReviewActions)
+				reviewSubGroup.GET("", app.Controllers.Admin.CorporationController.GetCorporationReviews)
+			}
+		}
+	}
+
+	report := routerGroup.Group("/report")
+	{
+		report.GET("/maintenance", app.Controllers.Admin.ReportController.GetMaintenanceReports)
+		report.GET("/panel", app.Controllers.Admin.ReportController.GetPanelReports)
+		report.POST("/resolve/:reportID", app.Controllers.Admin.ReportController.ResolveReport)
+	}
+
+	news := routerGroup.Group("/news")
+	{
+		news.POST("/draft", app.Controllers.Admin.NewsController.CreateDraftNews)
+		news.GET("", app.Controllers.Admin.NewsController.GetNewsList)
+		news.GET(status, app.Controllers.Admin.NewsController.GetAllNewsStatuses)
+		news.DELETE("", app.Controllers.Admin.NewsController.DeleteNews)
+		newsSubgroup := news.Group("/:newsID")
+		{
+			newsSubgroup.GET("", app.Controllers.Admin.NewsController.GetNews)
+			newsSubgroup.PUT("", app.Controllers.Admin.NewsController.EditNews)
+			newsSubgroup.PUT("/publish", app.Controllers.Admin.NewsController.PublishNews)
+			newsSubgroup.PUT("unpublish", app.Controllers.Admin.NewsController.UnpublishNews)
+			newsSubgroup.POST("/media", app.Controllers.Admin.NewsController.AddNewsMedia)
+			newsSubgroup.DELETE("/media/:mediaID", app.Controllers.Admin.NewsController.DeleteNewsMedia)
+			newsSubgroup.GET("/media/:mediaID", app.Controllers.Admin.NewsController.GetNewsMedia)
+		}
+
+	}
+}
