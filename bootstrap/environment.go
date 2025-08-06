@@ -18,7 +18,6 @@ type Env struct {
 	OTP                OTP
 	SMSGateway         SMSGateway
 	Pagination         Pagination
-	WebsocketSetting   WebsocketSetting
 	EmailSenderAccount EmailAccount
 	SuperAdmin         AdminCredentials
 	RabbitMQ           RabbitMQ
@@ -84,14 +83,6 @@ type SMSGateway struct {
 type Pagination struct {
 	DefaultPage     int
 	DefaultPageSize int
-}
-
-type WebsocketSetting struct {
-	WriteTimeout      time.Duration
-	ReadTimeout       time.Duration
-	PingPeriod        time.Duration
-	MaxMessageSize    int
-	MessageBufferSize int
 }
 
 type EmailAccount struct {
@@ -174,13 +165,6 @@ func NewEnvironments() *Env {
 		Pagination: Pagination{
 			DefaultPage:     getEnvInt("DEFAULT_PAGE", 6),
 			DefaultPageSize: getEnvInt("DEFAULT_PAGE_SIZE", 2),
-		},
-		WebsocketSetting: WebsocketSetting{
-			WriteTimeout:      getEnvDuration("WRITE_TIMEOUT", 10*time.Second),
-			ReadTimeout:       getEnvDuration("READ_TIMEOUT", 60*time.Second),
-			PingPeriod:        getEnvDuration("PING_PERIOD", 54*time.Second),
-			MaxMessageSize:    getEnvInt("MAX_MESSAGE_SIZE", 524288),
-			MessageBufferSize: getEnvInt("MESSAGE_BUFFER_SIZE", 256),
 		},
 		EmailSenderAccount: EmailAccount{
 			EmailFrom:     os.Getenv("EMAIL_FROM"),

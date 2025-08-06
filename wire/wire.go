@@ -27,7 +27,6 @@ import (
 	infraRedis "github.com/CosmeticsShiraz/Backend/internal/infrastructure/repository/redis"
 	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/seed"
 	infraStorage "github.com/CosmeticsShiraz/Backend/internal/infrastructure/storage"
-	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
@@ -123,7 +122,6 @@ var MiddlewareProviderSet = wire.NewSet(
 	middleware.NewRateLimit,
 	middleware.NewLoggerMiddleware,
 	middleware.NewPrometheusMiddleware,
-	middleware.NewWebsocketMiddleware,
 	wire.Struct(new(Middlewares), "*"),
 )
 
@@ -192,10 +190,6 @@ func ProvideStorageConfig(container *bootstrap.Config) *bootstrap.S3 {
 	return &container.Env.Storage
 }
 
-func ProvideWebsocketSetting(container *bootstrap.Config) *bootstrap.WebsocketSetting {
-	return &container.Env.WebsocketSetting
-}
-
 func ProvideEmailSenderAccount(container *bootstrap.Config) *bootstrap.EmailAccount {
 	return &container.Env.EmailSenderAccount
 }
@@ -237,7 +231,6 @@ var ProviderSet = wire.NewSet(
 	ProvideMetrics,
 	ProvidePaginationConfig,
 	ProvideStorageConfig,
-	ProvideWebsocketSetting,
 	ProvideEmailSenderAccount,
 	ProvideSuperAdminCredential,
 	ProvideRabbitMQConfig,
@@ -280,7 +273,6 @@ type Middlewares struct {
 	RateLimit           *middleware.RateLimitMiddleware
 	Logger              *middleware.LoggerMiddleware
 	Prometheus          *middleware.PrometheusMiddleware
-	WebsocketMiddleware *middleware.WebsocketMiddleware
 }
 
 type Seeds struct {
@@ -318,7 +310,7 @@ func NewApplication(
 	}
 }
 
-func InitializeApplication(container *bootstrap.Config, hub *websocket.Hub) (*Application, error) {
+func InitializeApplication(container *bootstrap.Config) (*Application, error) {
 	wire.Build(
 		ProviderSet,
 		NewApplication,

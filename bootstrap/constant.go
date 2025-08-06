@@ -21,7 +21,6 @@ type Context struct {
 	Translator                   string
 	IsLoadedValidationTranslator string
 	ID                           string
-	WebsocketConnection          string
 }
 
 type LogLevel struct {
@@ -52,7 +51,6 @@ type ErrorField struct {
 	Province            string
 	City                string
 	Page                string
-	Room                string
 	Role                string
 	Permission          string
 	PaymentTerm         string
@@ -147,7 +145,6 @@ func NewConstants() *Constants {
 			Translator:                   "translator",
 			IsLoadedValidationTranslator: "isLoadedValidationTranslator",
 			ID:                           "ID",
-			WebsocketConnection:          "wsConnection",
 		},
 		LogLevel: LogLevel{
 			Debug: "debug",
@@ -170,7 +167,6 @@ func NewConstants() *Constants {
 			Province:            "province",
 			City:                "city",
 			Page:                "page",
-			Room:                "room",
 			Role:                "role",
 			Permission:          "permission",
 			PaymentTerm:         "paymentTerm",

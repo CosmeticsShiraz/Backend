@@ -16,7 +16,6 @@ var Persian = map[string]interface{}{
 	"province":            "استان",
 	"city":                "شهر",
 	"page":                "صفحه",
-	"room":                "اتاق گفتگو",
 	"email":               "ایمیل",
 	"role":                "نقش",
 	"permission":          "دسترسی",

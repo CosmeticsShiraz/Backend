@@ -5,7 +5,6 @@ import (
 
 	"github.com/CosmeticsShiraz/Backend/bootstrap"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/entity"
-	"github.com/CosmeticsShiraz/Backend/internal/infrastructure/websocket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/routes"
 	"github.com/CosmeticsShiraz/Backend/wire"
 	"github.com/gin-gonic/gin"
@@ -16,9 +15,6 @@ func main() {
 	ginEngine := gin.New()
 
 	config := bootstrap.Run()
-
-	hub := websocket.NewHub()
-	go hub.Run()
 
 	app, err := wire.InitializeApplication(config, hub)
 	if err != nil {

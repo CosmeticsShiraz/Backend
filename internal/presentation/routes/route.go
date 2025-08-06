@@ -32,10 +32,6 @@ func registerCustomerRoutes(v1 *gin.RouterGroup, app *wire.Application) {
 	user := v1.Group("/user")
 	user.Use(app.Middlewares.Authentication.AuthRequired)
 	httpv1.SetupCustomerRoutes(user, app)
-
-	wsUser := v1.Group("/user")
-	wsUser.Use(app.Middlewares.WebsocketMiddleware.UpgradeToWebSocket)
-	wsv1.SetupCustomerRoutes(wsUser, app)
 }
 
 func registerAdminRoutes(v1 *gin.RouterGroup, app *wire.Application) {
