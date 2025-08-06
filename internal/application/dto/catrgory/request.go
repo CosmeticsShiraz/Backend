@@ -2,9 +2,9 @@ package categorydto
 
 type CreateCategoryRequest struct {
 	Name        string
-	Slug        string
-	Description string
-	ParentID    uint
+	Slug        *string
+	Description *string
+	ParentID    *uint
 }
 
 type EditCategoryRequest struct {
