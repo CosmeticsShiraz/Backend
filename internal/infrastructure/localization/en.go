@@ -19,7 +19,6 @@ var English = map[string]interface{}{
 	"email":               "email",
 	"role":                "role",
 	"permission":          "permission",
-	"paymentTerm":         "payment term",
 	"news":                "news",
 	"title":              "title",
 	"media":               "media",

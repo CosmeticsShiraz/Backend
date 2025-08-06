@@ -12,7 +12,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/domain/entity"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/enum"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/exception"
-	"github.com/CosmeticsShiraz/Backend/internal/domain/message"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/repository/postgres"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/repository/redis"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/s3"
@@ -378,12 +377,6 @@ func (userService *UserService) Register(registerInfo userdto.BasicRegisterReque
 		err = userService.userCacheRepository.Set(context.Background(), redisKey, otp, time.Duration(expiryMinute)*time.Minute)
 		if err != nil {
 			return err
-		}
-
-		msg := struct {
-			UserID uint `json:"userID"`
-		}{
-			UserID: user.ID,
 		}
 		// userService.smsService.SendOTP(registerInfo.Phone, otp)
 		return nil

@@ -52,7 +52,6 @@ type ErrorField struct {
 	Page                string
 	Role                string
 	Permission          string
-	PaymentTerm         string
 	News                string
 	Media               string
 	Post                string
@@ -161,7 +160,6 @@ func NewConstants() *Constants {
 			Page:                "page",
 			Role:                "role",
 			Permission:          "permission",
-			PaymentTerm:         "paymentTerm",
 			News:                "news",
 			Media:               "media",
 			Post:                "post",

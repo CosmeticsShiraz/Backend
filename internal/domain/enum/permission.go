@@ -28,6 +28,13 @@ const (
 	ProfileUpdate
 )
 
+const (
+	CategoryGeneral PermissionCategory = iota + 1
+	CategoryUser
+	CategoryNews
+	CategoryProfile
+)
+
 var permissionNames = map[PermissionType]string{
 	PermissionAll:     "general.all",
 	PermissionGeneral: "general.general",

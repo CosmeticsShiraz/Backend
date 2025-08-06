@@ -9,7 +9,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/application/usecase"
 	"github.com/CosmeticsShiraz/Backend/internal/domain/communication"
 	domainLogger "github.com/CosmeticsShiraz/Backend/internal/domain/logger"
-	"github.com/CosmeticsShiraz/Backend/internal/domain/message"
 	domainMetrics "github.com/CosmeticsShiraz/Backend/internal/domain/metrics"
 	domainPostgres "github.com/CosmeticsShiraz/Backend/internal/domain/repository/postgres"
 	domainRedis "github.com/CosmeticsShiraz/Backend/internal/domain/repository/redis"
@@ -27,7 +26,6 @@ import (
 	infraStorage "github.com/CosmeticsShiraz/Backend/internal/infrastructure/storage"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/address"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/user"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/middleware"
 	"github.com/google/wire"
@@ -45,12 +43,10 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewUserRepository,
 	infraPostgres.NewAddressRepository,
 	infraRedis.NewUserCacheRepository,
-	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
 	wire.Bind(new(domainPostgres.AddressRepository), new(*infraPostgres.AddressRepository)),
 	wire.Bind(new(domainRedis.UserCacheRepository), new(*infraRedis.UserCacheRepository)),
-	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
 	wire.Bind(new(domainPostgres.NewsRepository), new(*infraPostgres.NewsRepository)),
 )
 
@@ -61,9 +57,7 @@ var ServiceProviderSet = wire.NewSet(
 	sms.NewSMSService,
 	email.NewEmailService,
 	service.NewJWTService,
-	service.,
 	service.NewAddressService,
-	service.NewPaymentService,
 	service.NewNewsService,
 	wire.Bind(new(usecase.UserService), new(*service.UserService)),
 	wire.Bind(new(usecase.OTPService), new(*service.OTPService)),
@@ -71,7 +65,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(communication.EmailService), new(*email.EmailService)),
 	wire.Bind(new(usecase.JWTService), new(*service.JWTService)),
 	wire.Bind(new(usecase.AddressService), new(*service.AddressService)),
-	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
 	wire.Bind(new(usecase.NewsService), new(*service.NewsService)),
 )
 
@@ -90,7 +83,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 	user.NewGeneralUserController,
 	address.NewGeneralAddressController,
 	news.NewGeneralNewsController,
-	payment.NewGeneralPaymentController,
 	wire.Struct(new(GeneralControllers), "*"),
 )
 
@@ -125,13 +117,6 @@ var SeederProviderSet = wire.NewSet(
 	seed.NewAddressSeeder,
 	seed.NewRoleSeeder,
 	wire.Struct(new(Seeds), "*"),
-)
-
-var ConsumerProviderSet = wire.NewSet(
-	consumer.NewRegisterConsumer,
-	consumer.NewPushConsumer,
-	consumer.NewEmailConsumer,
-	wire.Struct(new(Consumers), "*"),
 )
 
 func ProvideConstants(container *bootstrap.Config) *bootstrap.Constants {
@@ -205,7 +190,6 @@ var ProviderSet = wire.NewSet(
 	ControllersProviderSet,
 	MiddlewareProviderSet,
 	SeederProviderSet,
-	ConsumerProviderSet,
 	ProvideConstants,
 	ProvideLoggerConfig,
 	ProvideRateLimitConfig,
@@ -221,7 +205,6 @@ var ProviderSet = wire.NewSet(
 	ProvideStorageConfig,
 	ProvideEmailSenderAccount,
 	ProvideSuperAdminCredential,
-	,
 )
 
 type Database struct {
@@ -233,7 +216,6 @@ type GeneralControllers struct {
 	UserController         *user.GeneralUserController
 	AddressController      *address.GeneralAddressController
 	NewsController         *news.GeneralNewsController
-	PaymentController      *payment.GeneralPaymentController
 }
 
 type CustomerControllers struct {
@@ -267,18 +249,11 @@ type Seeds struct {
 	RoleSeeder             *seed.RoleSeeder
 }
 
-type Consumers struct {
-	Register     *consumer.RegisterConsumer
-	Push         *consumer.PushConsumer
-	Email        *consumer.EmailConsumer
-}
-
 type Application struct {
 	Database    *Database
 	Controllers *Controllers
 	Middlewares *Middlewares
 	Seeds       *Seeds
-	Consumers   *Consumers
 }
 
 func NewApplication(
@@ -286,14 +261,12 @@ func NewApplication(
 	controllers *Controllers,
 	middlewares *Middlewares,
 	seeds *Seeds,
-	consumers *Consumers,
 ) *Application {
 	return &Application{
 		Database:    database,
 		Controllers: controllers,
 		Middlewares: middlewares,
 		Seeds:       seeds,
-		Consumers:   consumers,
 	}
 }
 

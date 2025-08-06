@@ -28,7 +28,6 @@ func main() {
 		&entity.Province{},
 		&entity.Role{},
 		&entity.User{},
-		&entity.PaymentTerm{},
 		&entity.Media{},
 		&entity.News{},
 		&entity.Post{},
@@ -37,16 +36,6 @@ func main() {
 
 	app.Seeds.AddressSeeder.SeedProvincesAndCities()
 	app.Seeds.RoleSeeder.SeedRoles()
-
-	if err := app.Consumers.Register.Start(); err != nil {
-		panic(err)
-	}
-	if err := app.Consumers.Push.Start(); err != nil {
-		panic(err)
-	}
-	if err := app.Consumers.Email.Start(); err != nil {
-		panic(err)
-	}
 
 	routes.Run(ginEngine, app)
 

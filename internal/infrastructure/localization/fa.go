@@ -19,7 +19,6 @@ var Persian = map[string]interface{}{
 	"email":               "ایمیل",
 	"role":                "نقش",
 	"permission":          "دسترسی",
-	"paymentTerm":         "روش پرداخت",
 	"news":                "اخبار",
 	"title":              "عنوان",
 	"media":               "محتوا",
