@@ -157,7 +157,6 @@ var SeederProviderSet = wire.NewSet(
 	seed.NewAddressSeeder,
 	seed.NewNotificationTypeSeeder,
 	seed.NewRoleSeeder,
-	seed.NewContactTypeSeeder,
 	wire.Struct(new(Seeds), "*"),
 )
 
@@ -321,7 +320,6 @@ type Seeds struct {
 	AddressSeeder          *seed.AddressSeeder
 	NotificationTypeSeeder *seed.NotificationTypeSeeder
 	RoleSeeder             *seed.RoleSeeder
-	ContactType            *seed.ContactTypeSeeder
 }
 
 type Consumers struct {

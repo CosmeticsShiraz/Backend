@@ -48,7 +48,6 @@ func main() {
 	app.Seeds.AddressSeeder.SeedProvincesAndCities()
 	app.Seeds.NotificationTypeSeeder.SeedNotificationTypes()
 	app.Seeds.RoleSeeder.SeedRoles()
-	app.Seeds.ContactType.SeedContactTypes()
 
 	if err := app.Consumers.Register.Start(); err != nil {
 		panic(err)

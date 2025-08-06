@@ -54,7 +54,6 @@ type ErrorField struct {
 	Province            string
 	City                string
 	Page                string
-	ContactType         string
 	Room                string
 	NotificationType    string
 	Notification        string
@@ -62,7 +61,6 @@ type ErrorField struct {
 	Role                string
 	Permission          string
 	Report              string
-	ContactInformation  string
 	PaymentTerm         string
 	Guarantee           string
 	GuaranteeViolation  string
@@ -198,14 +196,12 @@ func NewConstants() *Constants {
 			Province:            "province",
 			City:                "city",
 			Page:                "page",
-			ContactType:         "contactType",
 			Room:                "room",
 			NotificationType:    "notificationType",
 			Notification:        "notification",
 			Role:                "role",
 			Permission:          "permission",
 			Report:              "report",
-			ContactInformation:  "contactInformation",
 			NotificationSetting: "notificationSetting",
 			PaymentTerm:         "paymentTerm",
 			Guarantee:           "guarantee",

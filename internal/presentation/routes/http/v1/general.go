@@ -24,11 +24,6 @@ func SetupGeneralRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		addresses.GET("/province/:provinceID/city", app.Controllers.General.AddressController.GetProvinceCities)
 	}
 
-	notifications := routerGroup.Group("/notifications")
-	{
-		notifications.GET("/type", app.Controllers.General.NotificationController.GetContactTypes)
-	}
-
 	payments := routerGroup.Group("/payment")
 	{
 		payments.GET("method", app.Controllers.General.PaymentController.GetPaymentMethods)
