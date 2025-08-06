@@ -32,15 +32,3 @@ func NewRequestRateLimitError(message string, limit int, originalErr error) *Rat
 		OriginalErr: originalErr,
 	}
 }
-
-func NewConcurrentInstallLimitError(message string, limit int, originalErr error) *RateLimitError {
-	if message == "" {
-		message = "maximum concurrent installations limit reached"
-	}
-	return &RateLimitError{
-		Type:        ErrorTypeConcurrentInstallLimit,
-		Message:     message,
-		Limit:       limit,
-		OriginalErr: originalErr,
-	}
-}

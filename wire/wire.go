@@ -32,7 +32,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/chat"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/corporation"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/guarantee"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/installation"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/maintenance"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/news"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/notification"
@@ -54,7 +53,6 @@ var DatabaseProviderSet = wire.NewSet(
 
 var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewUserRepository,
-	infraPostgres.NewInstallationRepository,
 	infraPostgres.NewAddressRepository,
 	infraRedis.NewUserCacheRepository,
 	infraPostgres.NewCorporationRepository,
@@ -67,7 +65,6 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewPaymentRepository,
 	infraPostgres.NewNewsRepository,
 	wire.Bind(new(domainPostgres.UserRepository), new(*infraPostgres.UserRepository)),
-	wire.Bind(new(domainPostgres.InstallationRepository), new(*infraPostgres.InstallationRepository)),
 	wire.Bind(new(domainPostgres.AddressRepository), new(*infraPostgres.AddressRepository)),
 	wire.Bind(new(domainRedis.UserCacheRepository), new(*infraRedis.UserCacheRepository)),
 	wire.Bind(new(domainPostgres.CorporationRepository), new(*infraPostgres.CorporationRepository)),
@@ -84,13 +81,12 @@ var RepositoryProviderSet = wire.NewSet(
 var ServiceProviderSet = wire.NewSet(
 	wire.Struct(new(service.UserServiceDeps), "*"),
 	wire.Struct(new(service.NotificationServiceDeps), "*"),
-	wire.Struct(new(service.InstallationServiceDeps), "*"),
 	service.NewUserService,
 	service.NewOTPService,
 	sms.NewSMSService,
 	email.NewEmailService,
 	service.NewJWTService,
-	service.NewInstallationService,
+	service.,
 	service.NewAddressService,
 	service.NewCorporationService,
 	service.NewChatService,
@@ -106,7 +102,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(communication.SMSService), new(*sms.SMSService)),
 	wire.Bind(new(communication.EmailService), new(*email.EmailService)),
 	wire.Bind(new(usecase.JWTService), new(*service.JWTService)),
-	wire.Bind(new(usecase.InstallationService), new(*service.InstallationService)),
 	wire.Bind(new(usecase.AddressService), new(*service.AddressService)),
 	wire.Bind(new(usecase.CorporationService), new(*service.CorporationService)),
 	wire.Bind(new(usecase.ChatService), new(*service.ChatService)),
@@ -137,7 +132,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 	address.NewGeneralAddressController,
 	corporation.NewGeneralCorporationController,
 	notification.NewGeneralNotificationController,
-	installation.NewGeneralInstallationController,
 	news.NewGeneralNewsController,
 	payment.NewGeneralPaymentController,
 	ticket.NewGeneralTicketController,
@@ -146,7 +140,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 
 var CustomerControllerProviderSet = wire.NewSet(
 	user.NewCustomerUserController,
-	installation.NewCustomerInstallationController,
 	address.NewCustomerAddressController,
 	corporation.NewCustomerCorporationController,
 	chat.NewCustomerChatController,
@@ -159,7 +152,6 @@ var CustomerControllerProviderSet = wire.NewSet(
 
 var CorporationControllerProviderSet = wire.NewSet(
 	corporation.NewCorporationCorporationController,
-	installation.NewCorporationInstallationController,
 	chat.NewCorporationChatController,
 	maintenance.NewCorporationMaintenanceController,
 	guarantee.NewCorporationGuaranteeController,
@@ -172,7 +164,6 @@ var AdminControllerProviderSet = wire.NewSet(
 	report.NewAdminReportController,
 	news.NewAdminNewsController,
 	corporation.NewAdminCorporationController,
-	installation.NewAdminInstallationController,
 	wire.Struct(new(AdminControllers), "*"),
 )
 
@@ -323,7 +314,6 @@ type GeneralControllers struct {
 	AddressController      *address.GeneralAddressController
 	CorporationController  *corporation.GeneralCorporationController
 	NotificationController *notification.GeneralNotificationController
-	InstallationController *installation.GeneralInstallationController
 	NewsController         *news.GeneralNewsController
 	PaymentController      *payment.GeneralPaymentController
 	TicketController       *ticket.GeneralTicketController
@@ -331,7 +321,6 @@ type GeneralControllers struct {
 
 type CustomerControllers struct {
 	UserController         *user.CustomerUserController
-	InstallationController *installation.CustomerInstallationController
 	AddressController      *address.CustomerAddressController
 	CorporationController  *corporation.CustomerCorporationController
 	ChatController         *chat.CustomerChatController
@@ -343,7 +332,6 @@ type CustomerControllers struct {
 
 type CorporationControllers struct {
 	CorporationController  *corporation.CorporationCorporationController
-	InstallationController *installation.CorporationInstallationController
 	ChatController         *chat.CorporationChatController
 	MaintenanceController  *maintenance.CorporationMaintenanceController
 	GuaranteeController    *guarantee.CorporationGuaranteeController
@@ -355,7 +343,6 @@ type AdminControllers struct {
 	ReportController       *report.AdminReportController
 	NewsController         *news.AdminNewsController
 	CorporationController  *corporation.AdminCorporationController
-	InstallationController *installation.AdminInstallationController
 }
 
 type Controllers struct {

@@ -21,11 +21,6 @@ const (
 	CorporationViewAll
 	CorporationApproveDecline
 
-	// Panel Installation Request Management
-	InstallationRequestViewAll
-	InstallationRequestEdit
-	InstallationRequestRemove
-
 	// Ticket Management
 	TicketViewAll
 	TicketRespond
@@ -67,7 +62,6 @@ const (
 	CategoryGeneral PermissionCategory = iota + 1
 	CategoryUser
 	CategoryCorporation
-	CategoryInstallationRequest
 	CategoryTicket
 	CategoryReport
 	CategoryNews
@@ -93,11 +87,6 @@ var permissionNames = map[PermissionType]string{
 	// Corporation Management
 	CorporationViewAll:        "corporation.viewAll",
 	CorporationApproveDecline: "corporation.approveDecline",
-
-	// Installation Request Management
-	InstallationRequestViewAll: "installationRequest.viewAll",
-	InstallationRequestEdit:    "installationRequest.edit",
-	InstallationRequestRemove:  "installationRequest.remove",
 
 	// Ticket Management
 	TicketViewAll: "ticket.viewAll",
@@ -152,11 +141,6 @@ var permissionDescriptions = map[PermissionType]string{
 	CorporationViewAll:        "مشاهده لیست شرکت‌ها",
 	CorporationApproveDecline: "تایید/رد درخواست شرکت",
 
-	// Installation Request Management
-	InstallationRequestViewAll: "مشاهده لیست درخواست‌های نصب",
-	InstallationRequestEdit:    "ویرایش درخواست نصب",
-	InstallationRequestRemove:  "حذف درخواست نصب",
-
 	// Ticket Management
 	TicketViewAll: "مشاهده لیست تیکت‌ها",
 	TicketRespond: "پاسخ به تیکت",
@@ -209,11 +193,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	// Corporation Management
 	CorporationViewAll:        CategoryCorporation,
 	CorporationApproveDecline: CategoryCorporation,
-
-	// Installation Request Management
-	InstallationRequestViewAll: CategoryInstallationRequest,
-	InstallationRequestEdit:    CategoryInstallationRequest,
-	InstallationRequestRemove:  CategoryInstallationRequest,
 
 	// Ticket Management
 	TicketViewAll: CategoryTicket,
@@ -280,8 +259,6 @@ func (category PermissionCategory) String() string {
 		return "مدیریت کاربران"
 	case CategoryCorporation:
 		return "مدیریت شرکت‌ها"
-	case CategoryInstallationRequest:
-		return "مدیریت درخواست‌های نصب"
 	case CategoryTicket:
 		return "مدیریت تیکت"
 	case CategoryReport:
@@ -310,9 +287,6 @@ func GetAllPermissionTypes() []PermissionType {
 
 		// Corporation Management
 		CorporationViewAll, CorporationApproveDecline,
-
-		// Installation Request Management
-		InstallationRequestViewAll, InstallationRequestEdit, InstallationRequestRemove,
 
 		// Ticket Management
 		TicketViewAll, TicketRespond, TicketClose, TicketComment,

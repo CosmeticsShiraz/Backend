@@ -62,7 +62,6 @@ var English = map[string]interface{}{
 		"notVerified":            "You have to verify your account first.",
 		"notActive":              "This {0} is not active",
 		"rateLimitExceed":        "Rate limit exceeded. try again later.",
-		"installRateLimit":       "Active installation requests has been exceeded the limit.",
 		"forbiddenError":         "Forbidden: Access to {0} is not allowed",
 		"forbiddenStatus":        "Cannot do this action with this status.",
 		"pending":                "Your request is pending.",
