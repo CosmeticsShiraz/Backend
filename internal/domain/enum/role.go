@@ -16,13 +16,6 @@ var rolePermissions = map[RoleName][]PermissionType{
 		PermissionAll,
 	},
 	Customer: {},
-	Technician: {
-		MaintenanceViewAll, MaintenanceAcceptRequest, MaintenanceCreateRecord, MaintenanceUpdateRecord,
-	},
-	SupportAgent: {
-		TicketViewAll, TicketRespond, TicketClose, TicketComment,
-		ReportViewAll, ReportRespond,
-	},
 	ContentManager: {
 		NewsViewAll, NewsCreate, NewsEdit, NewsDelete,
 	},

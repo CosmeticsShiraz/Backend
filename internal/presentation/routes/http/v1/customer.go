@@ -51,17 +51,6 @@ func SetupCustomerRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 		notification.PUT("/setting/:settingID", app.Controllers.Customer.NotificationController.UpdateSettings)
 	}
 
-	tickets := routerGroup.Group("/ticket")
-	{
-		tickets.POST("", app.Controllers.Customer.TicketController.CreateTicket)
-		tickets.GET("/list", app.Controllers.Customer.TicketController.GetTickets)
-		ticketSubGroup := tickets.Group("/:ticketID/comments")
-		{
-			ticketSubGroup.GET("", app.Controllers.Customer.TicketController.GetComments)
-			ticketSubGroup.POST("", app.Controllers.Customer.TicketController.CreateComment)
-		}
-	}
-
 	reports := routerGroup.Group("/report")
 	{
 		maintenanceReports := reports.Group("/maintenance")

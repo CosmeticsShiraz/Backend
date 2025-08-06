@@ -14,8 +14,6 @@ type Constants struct {
 	JWTKeysPath         JWTKeysPath
 	Metrics             Metrics
 	AddressOwners       AddressOwners
-	TicketOwners        TicketOwners
-	TicketCommentOwners TicketCommentOwners
 	ReportObjectTypes   ReportObjectTypes
 	ReportOwners        ReportOwners
 	RabbitMQ            RabbitMQConstants
@@ -64,10 +62,8 @@ type ErrorField struct {
 	Panel               string
 	MaintenanceRequest  string
 	MaintenanceRecord   string
-	Ticket              string
 	Role                string
 	Permission          string
-	TicketComment       string
 	Report              string
 	ContactInformation  string
 	PaymentTerm         string
@@ -141,15 +137,6 @@ type AddressOwners struct {
 	User                string
 	Panel               string
 	MaintenanceRequest  string
-}
-
-type TicketOwners struct {
-	User        string
-}
-
-type TicketCommentOwners struct {
-	User        string
-	Admin       string
 }
 
 type ReportObjectTypes struct {
@@ -228,10 +215,8 @@ func NewConstants() *Constants {
 			Panel:               "panel",
 			MaintenanceRequest:  "maintenanceRequest",
 			MaintenanceRecord:   "maintenanceRecord",
-			Ticket:              "ticket",
 			Role:                "role",
 			Permission:          "permission",
-			TicketComment:       "ticketComment",
 			Report:              "report",
 			ContactInformation:  "contactInformation",
 			NotificationSetting: "notificationSetting",
@@ -340,10 +325,6 @@ func (r *RedisKey) GenerateOTPKey(value string) string {
 
 func (path *BucketPath) GetUserProfilePath(userID uint, pictureFileName string) string {
 	return fmt.Sprintf("user/%d/profile/%s", userID, pictureFileName)
-}
-
-func (path *BucketPath) GetTicketImagePath(ticketID uint, imageFilename string) string {
-	return fmt.Sprintf("tickets/%d/%s", ticketID, imageFilename)
 }
 
 func (path *BucketPath) GetNewsMediaPath(newsID uint, MediaFileName string) string {

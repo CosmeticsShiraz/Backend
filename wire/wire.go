@@ -36,7 +36,6 @@ import (
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/notification"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/payment"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/report"
-	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/ticket"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/controller/v1/user"
 	"github.com/CosmeticsShiraz/Backend/internal/presentation/middleware"
 	"github.com/google/wire"
@@ -57,7 +56,6 @@ var RepositoryProviderSet = wire.NewSet(
 	infraPostgres.NewChatRepository,
 	infraPostgres.NewNotificationRepository,
 	infraPostgres.NewMaintenanceRepository,
-	infraPostgres.NewTicketRepository,
 	infraPostgres.NewReportRepository,
 	infraPostgres.NewGuaranteeRepository,
 	infraPostgres.NewPaymentRepository,
@@ -68,7 +66,6 @@ var RepositoryProviderSet = wire.NewSet(
 	wire.Bind(new(domainPostgres.ChatRepository), new(*infraPostgres.ChatRepository)),
 	wire.Bind(new(domainPostgres.NotificationRepository), new(*infraPostgres.NotificationRepository)),
 	wire.Bind(new(domainPostgres.MaintenanceRepository), new(*infraPostgres.MaintenanceRepository)),
-	wire.Bind(new(domainPostgres.TicketRepository), new(*infraPostgres.TicketRepository)),
 	wire.Bind(new(domainPostgres.ReportRepository), new(*infraPostgres.ReportRepository)),
 	wire.Bind(new(domainPostgres.GuaranteeRepository), new(*infraPostgres.GuaranteeRepository)),
 	wire.Bind(new(domainPostgres.PaymentRepository), new(*infraPostgres.PaymentRepository)),
@@ -88,7 +85,6 @@ var ServiceProviderSet = wire.NewSet(
 	service.NewChatService,
 	service.NewNotificationService,
 	service.NewMaintenanceService,
-	service.NewTicketService,
 	service.NewReportService,
 	service.NewGuaranteeService,
 	service.NewPaymentService,
@@ -102,7 +98,6 @@ var ServiceProviderSet = wire.NewSet(
 	wire.Bind(new(usecase.ChatService), new(*service.ChatService)),
 	wire.Bind(new(usecase.NotificationService), new(*service.NotificationService)),
 	wire.Bind(new(usecase.MaintenanceService), new(*service.MaintenanceService)),
-	wire.Bind(new(usecase.TicketService), new(*service.TicketService)),
 	wire.Bind(new(usecase.ReportService), new(*service.ReportService)),
 	wire.Bind(new(usecase.GuaranteeService), new(*service.GuaranteeService)),
 	wire.Bind(new(usecase.PaymentService), new(*service.PaymentService)),
@@ -128,7 +123,6 @@ var GeneralControllerProviderSet = wire.NewSet(
 	notification.NewGeneralNotificationController,
 	news.NewGeneralNewsController,
 	payment.NewGeneralPaymentController,
-	ticket.NewGeneralTicketController,
 	wire.Struct(new(GeneralControllers), "*"),
 )
 
@@ -138,13 +132,11 @@ var CustomerControllerProviderSet = wire.NewSet(
 	chat.NewCustomerChatController,
 	notification.NewCustomerNotificationController,
 	maintenance.NewCustomerMaintenanceController,
-	ticket.NewCustomerTicketController,
 	report.NewCustomerReportController,
 	wire.Struct(new(CustomerControllers), "*"),
 )
 
 var AdminControllerProviderSet = wire.NewSet(
-	ticket.NewAdminTicketController,
 	user.NewAdminUserController,
 	report.NewAdminReportController,
 	news.NewAdminNewsController,
@@ -298,7 +290,6 @@ type GeneralControllers struct {
 	NotificationController *notification.GeneralNotificationController
 	NewsController         *news.GeneralNewsController
 	PaymentController      *payment.GeneralPaymentController
-	TicketController       *ticket.GeneralTicketController
 }
 
 type CustomerControllers struct {
@@ -307,12 +298,10 @@ type CustomerControllers struct {
 	ChatController         *chat.CustomerChatController
 	NotificationController *notification.CustomerNotificationController
 	MaintenanceController  *maintenance.CustomerMaintenanceController
-	TicketController       *ticket.CustomerTicketController
 	ReportController       *report.CustomerReportController
 }
 
 type AdminControllers struct {
-	TicketController       *ticket.AdminTicketController
 	UserController         *user.AdminUserController
 	ReportController       *report.AdminReportController
 	NewsController         *news.AdminNewsController

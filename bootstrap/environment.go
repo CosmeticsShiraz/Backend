@@ -67,7 +67,6 @@ type BucketName struct {
 	VATTaxpayerCertificate string
 	OfficialNewspaperAD    string
 	ProfilePic             string
-	TicketImage            string
 	LogoPic                string
 	NewsMedia              string
 }
@@ -156,7 +155,6 @@ func NewEnvironments() *Env {
 				VATTaxpayerCertificate: os.Getenv("TAXPAYER_CERTIFICATE_BUCKET_NAME"),
 				OfficialNewspaperAD:    os.Getenv("OFFICIAL_NEWSPAPER_AD_BUCKET_NAME"),
 				ProfilePic:             os.Getenv("PROFILE_PIC_BUCKET_NAME"),
-				TicketImage:            os.Getenv("TICKET_IMAGE_BUCKET_NAME"),
 				LogoPic:                os.Getenv("LOGO_PIC_BUCKET_NAME"),
 				NewsMedia:              os.Getenv("NEWS_MEDIA_BUCKET_NAME"),
 			},

@@ -17,12 +17,6 @@ const (
 	UserRemoveRole
 	UserCreateRole
 
-	// Ticket Management
-	TicketViewAll
-	TicketRespond
-	TicketClose
-	TicketComment
-
 	// Report Management
 	ReportViewAll
 	ReportRespond
@@ -52,7 +46,6 @@ const (
 const (
 	CategoryGeneral PermissionCategory = iota + 1
 	CategoryUser
-	CategoryTicket
 	CategoryReport
 	CategoryNews
 	CategoryPanel
@@ -73,12 +66,6 @@ var permissionNames = map[PermissionType]string{
 	UserManageRolePermissions: "user.manageRolePermissions",
 	UserRemoveRole:            "user.removeRole",
 	UserCreateRole:            "user.createRole",
-
-	// Ticket Management
-	TicketViewAll: "ticket.viewAll",
-	TicketRespond: "ticket.respond",
-	TicketClose:   "ticket.close",
-	TicketComment: "ticket.comment",
 
 	// Report Management
 	ReportViewAll: "report.viewAll",
@@ -123,12 +110,6 @@ var permissionDescriptions = map[PermissionType]string{
 	UserRemoveRole:            "حذف نقش",
 	UserCreateRole:            "ایجاد نقش جدید",
 
-	// Ticket Management
-	TicketViewAll: "مشاهده لیست تیکت‌ها",
-	TicketRespond: "پاسخ به تیکت",
-	TicketClose:   "بستن تیکت",
-	TicketComment: "افزودن نظر به تیکت",
-
 	// Report Management
 	ReportViewAll: "مشاهده لیست گزارش‌ها",
 	ReportRespond: "پاسخ به گزارش",
@@ -171,12 +152,6 @@ var permissionCategories = map[PermissionType]PermissionCategory{
 	UserManageRolePermissions: CategoryUser,
 	UserRemoveRole:            CategoryUser,
 	UserCreateRole:            CategoryUser,
-
-	// Ticket Management
-	TicketViewAll: CategoryTicket,
-	TicketRespond: CategoryTicket,
-	TicketClose:   CategoryTicket,
-	TicketComment: CategoryTicket,
 
 	// Report Management
 	ReportViewAll: CategoryReport,
@@ -235,8 +210,6 @@ func (category PermissionCategory) String() string {
 		return "عمومی"
 	case CategoryUser:
 		return "مدیریت کاربران"
-	case CategoryTicket:
-		return "مدیریت تیکت"
 	case CategoryReport:
 		return "مدیریت گزارشات"
 	case CategoryNews:
@@ -260,9 +233,6 @@ func GetAllPermissionTypes() []PermissionType {
 		// User Management
 		UserViewAll, UserBanUnban, UserChangeRole, UserViewRoles,
 		UserManageRolePermissions, UserRemoveRole, UserCreateRole,
-
-		// Ticket Management
-		TicketViewAll, TicketRespond, TicketClose, TicketComment,
 
 		// Report Management
 		ReportViewAll, ReportRespond,

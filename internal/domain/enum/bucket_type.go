@@ -6,7 +6,6 @@ const (
 	VATTaxpayerCertificate BucketType = iota + 1
 	OfficialNewspaperAD
 	ProfilePic
-	TicketImage
 	LogoPic
 	NewsMedia
 )
@@ -19,8 +18,6 @@ func (bt BucketType) String() string {
 		return "officialNewspaperAD"
 	case ProfilePic:
 		return "profilePic"
-	case TicketImage:
-		return "ticketImage"
 	case LogoPic:
 		return "logoPic"
 	case NewsMedia:
@@ -34,7 +31,6 @@ func GetAllBucketTypes() []BucketType {
 		VATTaxpayerCertificate,
 		OfficialNewspaperAD,
 		ProfilePic,
-		TicketImage,
 		LogoPic,
 		NewsMedia,
 	}

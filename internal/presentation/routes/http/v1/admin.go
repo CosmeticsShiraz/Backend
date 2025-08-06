@@ -8,17 +8,6 @@ import (
 func SetupAdminRoutes(routerGroup *gin.RouterGroup, app *wire.Application) {
 	const status string = "/status"
 
-	ticket := routerGroup.Group("/ticket")
-	{
-		ticket.GET("", app.Controllers.Admin.TicketController.GetTickets)
-		ticketsSubGroup := ticket.Group("/:ticketID")
-		{
-			ticketsSubGroup.GET("/comments", app.Controllers.Admin.TicketController.GetComments)
-			ticketsSubGroup.POST("/comments", app.Controllers.Admin.TicketController.CreateComment)
-			ticketsSubGroup.POST("/resolve", app.Controllers.Admin.TicketController.ResolveTicket)
-		}
-	}
-
 	accessManagement := routerGroup.Group("")
 	// accessManagement.Use(app.Middlewares.Auth.RequirePermission([]enums.PermissionType{enums.ManageUsers, enums.ManageRoles}))
 	{
